@@ -1,0 +1,133 @@
+<br><br>
+
+<a ui-sref="root.home">
+  Return to home page.
+</a>
+
+
+<br>
+
+<input type="text" ng-model="movieSearchCtrl.inputSearchTerm">
+
+<br>
+
+<button
+  ng-click="movieSearchCtrl.searchMovies(movieSearchCtrl.inputSearchTerm, movieSearchCtrl.searchType, movieSearchCtrl.sort)">
+  Search for Movies
+</button>
+
+<div class="form-group">
+  <label for="exampleSelect1">Select Criteria</label>
+  <select class="form-control" id="exampleSelect1" width="50%"
+      ng-model="movieSearchCtrl.searchType">
+    <option>Title</option>
+    <option>Cast</option>
+    <option>Genre</option>
+  </select>
+</div>
+
+<br>
+
+<div class="form-group">
+  <legend>Sort By:</legend>
+  <div class="custom-control custom-radio">
+    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"
+      ng-model="movieSearchCtrl.sort" value="relevance"
+      ng-change="movieSearchCtrl.searchMovies(movieSearchCtrl.inputSearchTerm, movieSearchCtrl.searchType, movieSearchCtrl.sort)">
+    <label class="custom-control-label" for="customRadio1">Relevance</label>
+  </div>
+  <div class="custom-control custom-radio">
+    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input"
+      ng-model="movieSearchCtrl.sort" value="rating"
+      ng-change="movieSearchCtrl.searchMovies(movieSearchCtrl.inputSearchTerm, movieSearchCtrl.searchType, movieSearchCtrl.sort)">
+    <label class="custom-control-label" for="customRadio2">Rating</label>
+  </div>
+  <div class="custom-control custom-radio">
+    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input"
+      ng-model="movieSearchCtrl.sort" value="year"
+      ng-change="movieSearchCtrl.searchMovies(movieSearchCtrl.inputSearchTerm, movieSearchCtrl.searchType, movieSearchCtrl.sort)">
+    <label class="custom-control-label" for="customRadio3">Year</label>
+  </div>
+</div>
+
+<br>
+
+<div ng-if="movieSearchCtrl.error.noResultFound">
+  No results found for '{{ movieSearchCtrl.inputSearchTerm }}'.
+</div>
+
+<!-- <div ng-if="movieSearchCtrl.showMovies">
+  Displaying titles
+  {{ movieSearchCtrl.firstTitleOnPage }}-{{ movieSearchCtrl.lastTitleOnPage }}
+  of {{ movieSearchCtrl.totalResults }}.
+</div>
+
+<br>
+
+<button
+  ng-if="movieSearchCtrl.showMovies && movieSearchCtrl.thisPage > 1"
+  ng-click="movieSearchCtrl.searchMovies(movieSearchCtrl.searchTerm,
+            movieSearchCtrl.previousPage)">
+  Previous Page
+</button>
+<button
+  ng-if="!movieSearchCtrl.isLastPage && movieSearchCtrl.showMovies"
+  ng-click="movieSearchCtrl.searchMovies(movieSearchCtrl.searchTerm,
+            movieSearchCtrl.nextPage)">
+  Next Page
+</button> -->
+
+<!-- <br>
+
+<div>Previous Page: {{ movieSearchCtrl.previousPage }}</div>
+<div>This Page: {{ movieSearchCtrl.thisPage }}</div>
+<div>Next Page: {{ movieSearchCtrl.nextPage }}</div>
+<div>Total Pages: {{ movieSearchCtrl.totalPages }}</div>
+<div>Last Page: {{ movieSearchCtrl.isLastPage }}</div> -->
+
+<br>
+<br>
+
+<!-- <ul ng-if="movieSearchCtrl.showMovies">
+  <li ng-repeat="movie in movieSearchCtrl.movies"
+      ui-sref="root.movie-detail({movieTitle: movie.Title})">
+    <div>{{ movie.Title }} ({{ movie.Year }})</div>
+    <img src="{{ movie.Poster }}" alt="Poster Not Available"
+      height="100px">
+  </li>
+</ul> -->
+
+<div class="container col-lg-3 col-md-4 col-sm-6 float-left clear-top"
+    heigh="1000px"
+    ng-repeat="movie in movieSearchCtrl.movies"
+    ng-if="movieSearchCtrl.showMovies"
+    ui-sref="root.movie-detail({movieTitle: movie.Title})">
+  <div class="card border-primary mb-3" style="max-width: 20rem;">
+    <div class="card-header">
+      <h4 class="card-title" width="100%">{{ movie.Title }} </h4>
+      <h5 class="card-title" width="50%">({{ movie.Year }})</h5>
+    </div>
+    <div class="card-body">
+      <img src="{{ movie.Poster }}" alt="Poster Not Available"
+        width="100%">
+      <p class="card-text">{{ movie.Plot }}</p>
+      <div>IMDb: {{ movie.imdbRating }}/10</div>
+      <div ng-if="movie.rottenTomatoesRating">Rotten Tomatoes: {{ movie.rottenTomatoesRating }}%</div>
+      <div ng-if="movie.metacriticRating">Metacritic: {{ movie.metacriticRating }}/100</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="card border-primary mb-3" style="max-width: 20rem;"
+    ng-repeat="movie in movieSearchCtrl.movies"
+    ui-sref="root.movie-detail({movieTitle: movie.Title})">
+  <div class="card-header">
+    <h4 class="card-title">{{ movie.Title }} ({{ movie.Year }})</h4>
+  </div>
+  <div class="card-body">
+    <img src="{{ movie.Poster }}" alt="Poster Not Available"
+      height="100px">
+    <p class="card-text">{{ movie.Plot }}</p>
+  </div>
+</div> -->

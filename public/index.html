@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="FlickList">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="lib/jquery-3.4.1.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
+    <script src="lib/angularfire.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="lib/firebase.js"></script>
+    <!-- <script src="lib/firebase-app.js"></script> -->
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAsT7fnnV0JQNrBXzZbp-YLQvuBzdDXL1o",
+        authDomain: "fir-1-6e02d.firebaseapp.com",
+        databaseURL: "https://fir-1-6e02d.firebaseio.com",
+        projectId: "fir-1-6e02d",
+        storageBucket: "",
+        messagingSenderId: "884941119160",
+        appId: "1:884941119160:web:43367b8c2d032f99"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <title>FlickList</title>
+  </head>
+  <body>
+
+    <ui-view></ui-view>
+
+    <!-- Libraries -->
+    <!-- <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
+    <script src="lib/angularfire.min.js"></script> -->
+
+    <!-- Modules and Artifacts -->
+    <script src="src/flicklist.module.js"></script>
+    <script src="src/flicklist.routes.js"></script>
+    <script src="src/login.controller.js"></script>
+    <script src="src/register.controller.js"></script>
+    <script src="src/home.controller.js"></script>
+    <script src="src/root.controller.js"></script>
+    <script src="src/user.service.js"></script>
+
+    <!-- MovieList module -->
+    <script src="src/movie-search.module.js"></script>
+    <script src="src/movie-search.service.js"></script>
+    <script src="src/movie-search.controller.js"></script>
+    <script src="src/movie-detail.controller.js"></script>
+
+  </body>
+</html>

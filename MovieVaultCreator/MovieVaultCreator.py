@@ -1,5 +1,4 @@
 import requests
-from pprint import pprint
 import pymongo
 
 # Create MongoDB Client
@@ -13,7 +12,7 @@ currentID = ''
 # Count of valid movies added to database
 movieCount = 0
 
-for i in range(407887, 417887):
+for i in range(0, 999999999):
 
 	# Create proper IMDb ID from number
 	currentID = 'tt' + str(i).zfill(7)
