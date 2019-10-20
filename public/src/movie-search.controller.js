@@ -16,9 +16,40 @@ function MovieSearchController(MovieSearchService) {
   movieSearchCtrl.movies = [];
 
   movieSearchCtrl.searchType = 'Title';
+  movieSearchCtrl.searchGenre = 'Action';
   movieSearchCtrl.sort = 'relevance';
+  movieSearchCtrl.sortingRatingSite = 'IMDb';
+  movieSearchCtrl.yearOrder = 'Newest First';
 
-  movieSearchCtrl.searchMovies = function (searchTerm, searchType, sortType) {
+  movieSearchCtrl.searchMovies = function () {
+    var searchTerm = '';
+    if (movieSearchCtrl.searchType == 'Genre') {
+      searchTerm = movieSearchCtrl.searchGenre;
+    } else {
+      searchTerm = movieSearchCtrl.inputSearchTerm;
+    }
+
+    var searchType = movieSearchCtrl.searchType;
+
+    var sortType = '';
+    if (movieSearchCtrl.sort == 'rating') {
+      if (movieSearchCtrl.sortingRatingSite == 'Rotten Tomatoes') {
+        sortType = 'rottenTomatoesRating';
+      } else if (movieSearchCtrl.sortingRatingSite == 'Metacritic') {
+        sortType = 'metacriticRating';
+      } else {
+        sortType = 'imdbRating'
+      }
+    } else if (movieSearchCtrl.sort == 'year') {
+      if (movieSearchCtrl.yearOrder == 'Newest First') {
+        sortType = 'sortNewestFirst';
+      } else {
+        sortType = 'sortOldestFirst';
+      }
+    } else {
+      sortType = 'imdbVotes';
+    }
+
     var promise = MovieSearchService.searchMoviesByType(searchTerm, searchType, sortType);
     promise.then(function (result) {
       movieSearchCtrl.movies = result;
@@ -32,7 +63,19 @@ function MovieSearchController(MovieSearchService) {
       }
 
     });
+  };
+
+  movieSearchCtrl.updateResults = function () {
+    if (movieSearchCtrl.showMovies) {
+      movieSearchCtrl.searchMovies();
+    }
   }
+
+  movieSearchCtrl.resetResults = function () {
+    movieSearchCtrl.movies = [];
+    movieSearchCtrl.showMovies = false;
+    movieSearchCtrl.error.noResultFound = false;
+  };
 
   //   var promise = MovieSearchService.searchMovies(searchTerm, page);
   //   promise.then(function (result) {

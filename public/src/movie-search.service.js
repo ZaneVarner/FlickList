@@ -11,25 +11,32 @@ function MovieSearchService ($http) {
 
   service.searchMoviesByType = function (searchTerm, searchType, sortType) {
 
-    var sortBy = '';
-    if (sortType == 'relevance') {
-      sortBy = 'imdbVotes';
-    } else if (sortType == 'rating') {
-      sortBy = 'imdbRating';
-    } else if (sortType == 'year') {
+    var order = -1;
+    var sortBy = sortType;
+    if (sortType == 'sortNewestFirst') {
       sortBy = 'Year';
+    } else if (sortType == 'sortOldestFirst') {
+      sortBy = 'Year';
+      order = 1;
     }
-    var sortOrder = -1;
+
 
     if (searchType == 'Title') {
-      return $http.get('http://localhost:8080/movies/title/' + searchTerm + '/' + sortBy + '/' + sortOrder)
+      return $http.get('http://localhost:8080/movies/title/' + searchTerm + '/' + sortBy + '/' + order)
           .then(function (response) {
         console.log(searchType);
         console.log(response.data);
         return response.data;
       });
-    } else {
-      return $http.get('http://localhost:8080/movies/cast/' + searchTerm + '/' + sortBy + '/' + sortOrder)
+    } else if (searchType == 'Cast') {
+      return $http.get('http://localhost:8080/movies/cast/' + searchTerm + '/' + sortBy + '/' + order)
+          .then(function (response) {
+        console.log(searchType);
+        console.log(response.data);
+        return response.data;
+      });
+    } else if (searchType == 'Genre') {
+      return $http.get('http://localhost:8080/movies/genre/' + searchTerm + '/' + sortBy + '/' + order)
           .then(function (response) {
         console.log(searchType);
         console.log(response.data);

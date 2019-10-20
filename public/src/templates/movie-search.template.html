@@ -7,19 +7,54 @@
 
 <br>
 
-<input type="text" ng-model="movieSearchCtrl.inputSearchTerm">
+<input type="text" ng-model="movieSearchCtrl.inputSearchTerm"
+  ng-if="movieSearchCtrl.searchType != 'Genre'">
+
+<div class="form-group" ng-if="movieSearchCtrl.searchType == 'Genre'">
+  <label for="genreSelect">Select Genre</label>
+  <select class="form-control" id="genreSelect" width="50%"
+      ng-model="movieSearchCtrl.searchGenre">
+    <option>Action</option>
+    <option>Adventure</option>
+    <option>Animation</option>
+    <option>Biography</option>
+    <option>Comedy</option>
+    <option>Crime</option>
+    <option>Documentary</option>
+    <option>Drama</option>
+    <option>Family</option>
+    <option>Fantasy</option>
+    <option>Film-Noir</option>
+    <option>Game-Show</option>
+    <option>History</option>
+    <option>Horror</option>
+    <option>Music</option>
+    <option>Musical</option>
+    <option>Mystery</option>
+    <option>News</option>
+    <option>Reality-TV</option>
+    <option>Romance</option>
+    <option>Sci-Fi</option>
+    <option>Sport</option>
+    <option>Talk-Show</option>
+    <option>Thriller</option>
+    <option>War</option>
+    <option>Western</option>
+  </select>
+</div>
 
 <br>
-
+<!-- Must find solution to make input search term the genre when applicable -->
 <button
-  ng-click="movieSearchCtrl.searchMovies(movieSearchCtrl.inputSearchTerm, movieSearchCtrl.searchType, movieSearchCtrl.sort)">
+  ng-click="movieSearchCtrl.searchMovies()">
   Search for Movies
 </button>
 
 <div class="form-group">
-  <label for="exampleSelect1">Select Criteria</label>
-  <select class="form-control" id="exampleSelect1" width="50%"
-      ng-model="movieSearchCtrl.searchType">
+  <label for="searchTypeSelect">Select Search Type</label>
+  <select class="form-control" id="searchTypeSelect" width="50%"
+      ng-model="movieSearchCtrl.searchType"
+      ng-change="movieSearchCtrl.resetResults()">
     <option>Title</option>
     <option>Cast</option>
     <option>Genre</option>
@@ -28,27 +63,48 @@
 
 <br>
 
-<div class="form-group">
+<span class="form-group">
   <legend>Sort By:</legend>
   <div class="custom-control custom-radio">
     <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"
       ng-model="movieSearchCtrl.sort" value="relevance"
-      ng-change="movieSearchCtrl.searchMovies(movieSearchCtrl.inputSearchTerm, movieSearchCtrl.searchType, movieSearchCtrl.sort)">
+      ng-change="movieSearchCtrl.updateResults()">
     <label class="custom-control-label" for="customRadio1">Relevance</label>
   </div>
   <div class="custom-control custom-radio">
     <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input"
       ng-model="movieSearchCtrl.sort" value="rating"
-      ng-change="movieSearchCtrl.searchMovies(movieSearchCtrl.inputSearchTerm, movieSearchCtrl.searchType, movieSearchCtrl.sort)">
+      ng-change="movieSearchCtrl.updateResults()">
     <label class="custom-control-label" for="customRadio2">Rating</label>
   </div>
   <div class="custom-control custom-radio">
     <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input"
       ng-model="movieSearchCtrl.sort" value="year"
-      ng-change="movieSearchCtrl.searchMovies(movieSearchCtrl.inputSearchTerm, movieSearchCtrl.searchType, movieSearchCtrl.sort)">
+      ng-change="movieSearchCtrl.updateResults()">
     <label class="custom-control-label" for="customRadio3">Year</label>
   </div>
-</div>
+</span>
+
+<span class="form-group" ng-if="movieSearchCtrl.sort == 'rating'">
+  <label for="ratingSiteSelect">Select Rating Site</label>
+  <select id="ratingSiteSelect" width="50%"
+      ng-model="movieSearchCtrl.sortingRatingSite"
+      ng-change="movieSearchCtrl.updateResults()">
+    <option>IMDb</option>
+    <option>Rotten Tomatoes</option>
+    <option>Metacritic</option>
+  </select>
+</span>
+
+<span class="form-group" ng-if="movieSearchCtrl.sort == 'year'">
+  <label for="yearOrderSelect">Select Ordering</label>
+  <select id="yearOrderSelect" width="50%"
+      ng-model="movieSearchCtrl.yearOrder"
+      ng-change="movieSearchCtrl.updateResults()">
+    <option>Newest First</option>
+    <option>Oldest First</option>
+  </select>
+</span>
 
 <br>
 
@@ -98,7 +154,7 @@
 </ul> -->
 
 <div class="container col-lg-3 col-md-4 col-sm-6 float-left clear-top"
-    heigh="1000px"
+    height="1000px"
     ng-repeat="movie in movieSearchCtrl.movies"
     ng-if="movieSearchCtrl.showMovies"
     ui-sref="root.movie-detail({movieTitle: movie.Title})">

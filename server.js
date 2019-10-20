@@ -26,9 +26,6 @@ app.listen(8080, function () {
         database = client.db(DATABASE_NAME);
         collection = database.collection("movies");
         console.log("Connected to `" + DATABASE_NAME + "`!");
-        console.log(collection.distinct('Genre').then(function (genres) {
-          return genres;
-        }));
     });
 });
 
@@ -51,21 +48,21 @@ app.listen(8080, function () {
 //     });
 // });
 
-app.get("/movies/all_titles/:title", function (request, response) {
-    console.log(request.params.title);
-    collection.createIndex({ Title: "text" });
-    collection.find(
-      { $text: { $search: request.params.title } },
-      { projection: { score: { $meta: 'textScore' } } })
-      // .sort( { score: { $meta: "textScore" } } )
-      .sort( { imdbVotes: -1 } )
-      .toArray(function (error, result) {
-        if(error) {
-            return response.status(500).send(error);
-        }
-        response.send(result);
-    });
-});
+// app.get("/movies/all_titles/:title", function (request, response) {
+//     console.log(request.params.title);
+//     collection.createIndex({ Title: "text" });
+//     collection.find(
+//       { $text: { $search: request.params.title } },
+//       { projection: { score: { $meta: 'textScore' } } })
+//       // .sort( { score: { $meta: "textScore" } } )
+//       .sort( { imdbVotes: -1 } )
+//       .toArray(function (error, result) {
+//         if(error) {
+//             return response.status(500).send(error);
+//         }
+//         response.send(result);
+//     });
+// });
 
 app.get("/movies/title/:title/:sort/:order", function (request, response) {
     console.log(request.params.title);
@@ -99,7 +96,6 @@ app.get("/movies/title/:title/:sort/:order", function (request, response) {
 app.get("/movies/cast/:cast/:sort/:order", function (request, response) {
     console.log(request.params.cast);
     var query = { 'Cast': new RegExp(request.params.cast, 'i') };
-    // var mysort = { 'imdbRating': -1 };
     mysort = {};
     mysort[request.params.sort] = parseInt(request.params.order);
     collection.find(query).sort(mysort).toArray(function (error, result) {
@@ -110,15 +106,15 @@ app.get("/movies/cast/:cast/:sort/:order", function (request, response) {
     });
 });
 
-
-// app.get("/movies/cast/:cast", function (request, response) {
-//     console.log(request.params.cast);
-//     var query = { 'Cast': new RegExp(request.params.cast, 'i') };
-//     var mysort = { 'imdbRating': -1 };
-//     collection.find(query).sort(mysort).toArray(function (error, result) {
-//         if(error) {
-//             return response.status(500).send(error);
-//         }
-//         response.send(result);
-//     });
-// });
+app.get("/movies/genre/:genre/:sort/:order", function (request, response) {
+    console.log(request.params.genre);
+    var query = { 'Genre': new RegExp(request.params.genre, 'i') };
+    mysort = {};
+    mysort[request.params.sort] = parseInt(request.params.order);
+    collection.find(query).limit(100).sort(mysort).toArray(function (error, result) {
+        if(error) {
+            return response.status(500).send(error);
+        }
+        response.send(result);
+    });
+});
