@@ -1,0 +1,61 @@
+<h2>{{ movieDetailCtrl.movieDetail.Title }} ({{ movieDetailCtrl.movieDetail.Year }})</h2>
+
+<div>
+  <img src="{{ movieDetailCtrl.movieDetail.Poster }}"
+    alt="Poster Not Available">
+</div>
+
+<div>
+  <h3>Director:</h3>
+  {{ movieDetailCtrl.movieDetail.Director }}
+</div>
+
+<div>
+  <h3>Starring:</h3>
+  {{ movieDetailCtrl.movieDetail.Actors }}
+</div>
+
+<div>
+  <h3>Awards:</h3>
+  {{ movieDetailCtrl.movieDetail.Awards  }}
+</div>
+
+<div>
+  <h3>Plot:</h3>
+  {{ movieDetailCtrl.movieDetail.Plot }}
+</div>
+
+<div>
+  <h4><a href="{{ movieDetailCtrl.netflixURL }}" target="_blank">
+    Watch on Netflix
+  </a></h4>
+</div>
+
+<div>
+  <h4><a href="{{ movieDetailCtrl.primeVideoURL }}" target="_blank">
+    Watch on Amazon Prime Video
+  </a></h4>
+</div>
+
+<div>
+  <h4><a href="{{ movieDetailCtrl.youtubeURL }}" target="_blank">
+    Watch on YouTube
+  </a></h4>
+</div>
+
+<div ng-if="movieDetailCtrl.trailerAvailable">
+  <h3>Trailer:</h3>
+  <iframe width="560" height="315"
+    src="{{ movieDetailCtrl.trailerSource }}"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
+<div ng-if="!movieDetailCtrl.trailerAvailable">
+  <h2>Trailer unavailable.</h2>
+</div>
+
+<br>
+<br>
+<a ui-sref="root.movie-search">Start New Search</a>
