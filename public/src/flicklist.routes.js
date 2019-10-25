@@ -47,14 +47,14 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
     })
 
     .state('root.movie-detail', {
-      url: '/movie-detail/{movieTitle}',
+      url: '/movie-detail/{movieID}',
       templateUrl: 'src/templates/movie-detail.template.html',
       controller: 'MovieDetailController',
       controllerAs: 'movieDetailCtrl',
       resolve: {
         movieDetail: ['$stateParams', 'MovieSearchService',
           function ($stateParams, MovieSearchService) {
-            return MovieSearchService.getMovieDetail($stateParams.movieTitle);
+            return MovieSearchService.getMovieDetail($stateParams.movieID);
           }]
       }
     });

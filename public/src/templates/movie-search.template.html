@@ -153,11 +153,12 @@
   </li>
 </ul> -->
 
-<div class="container col-lg-3 col-md-4 col-sm-6 float-left clear-top"
+<div class="container col-lg-3 col-md-4 col-sm-6"
+    style="display:inline-block;"
     height="1000px"
     ng-repeat="movie in movieSearchCtrl.movies"
     ng-if="movieSearchCtrl.showMovies"
-    ui-sref="root.movie-detail({movieTitle: movie.Title})">
+    ui-sref="root.movie-detail({movieID: movie.imdbID})">
   <div class="card border-primary mb-3" style="max-width: 20rem;">
     <div class="card-header">
       <h4 class="card-title" width="100%">{{ movie.Title }} </h4>

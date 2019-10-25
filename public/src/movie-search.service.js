@@ -68,7 +68,7 @@ function MovieSearchService ($http) {
       method: "GET",
       url: "https://www.omdbapi.com/",
       params: {
-        t: movieTitle,
+        i: movieTitle,
         plot: "full",
         apikey: "44664e4"
       }
