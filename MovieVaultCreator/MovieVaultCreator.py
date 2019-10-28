@@ -12,7 +12,7 @@ currentID = ''
 # Count of valid movies added to database
 movieCount = 0
 
-for i in range(0, 999999999):
+for i in range(7286450, 7286460):
 
 	# Create proper IMDb ID from number
 	currentID = 'tt' + str(i).zfill(7)
@@ -37,7 +37,7 @@ for i in range(0, 999999999):
 			#	Available Plot
 			#	No Adult Content
 			#	No Short Films
-			if data['Country'] == 'USA' and data['Type'] == 'movie' and data['Title'] != 'N/A' and data['Year'] != 'N/A' and int(data['Year']) > 1929 and data['Poster'] != 'N/A' and data['Plot'] != 'N/A' and data['Genre'] != 'N/A' and data['Actors'] != 'N/A' and data['imdbVotes'] != 'N/A' and data['imdbRating'] != 'N/A' and 'Adult' not in data['Genre'] and 'Short' not in data['Genre']:
+			if 'USA' in data['Country'] and data['Type'] == 'movie' and data['Title'] != 'N/A' and data['Year'] != 'N/A' and int(data['Year']) > 1929 and data['Poster'] != 'N/A' and data['Plot'] != 'N/A' and data['Genre'] != 'N/A' and data['Actors'] != 'N/A' and data['imdbVotes'] != 'N/A' and data['imdbRating'] != 'N/A' and 'Adult' not in data['Genre'] and 'Short' not in data['Genre']:
 				# Increment Count of Valid Movies
 				movieCount += 1
 
