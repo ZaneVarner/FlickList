@@ -12,3 +12,9 @@ top level directory (same level as README.md)
     ```
     browser-sync start --server --directory --files “**/*”
     ```
+
+# To run unit tests
+1. Install Jasmine with the command ```npm install -g jasmine```
+2. Run ```jasmine [spec_filename]``` in the top level directory
+    - To run specific specs, specify their filename(s)
+    - To run all tests, don't specify any filenames
