@@ -4,8 +4,8 @@
 angular.module('FlickList')
 .controller('RegisterController', RegisterController);
 
-RegisterController.$inject = ['$firebaseAuth', '$state'];
-function RegisterController ($firebaseAuth, $state) {
+RegisterController.$inject = ['$firebaseAuth', '$state', 'UserService'];
+function RegisterController ($firebaseAuth, $state, UserService) {
   var regCtrl = this;
 
   regCtrl.register = function () {
@@ -16,7 +16,11 @@ function RegisterController ($firebaseAuth, $state) {
 			var auth = $firebaseAuth();
 			auth.$createUserWithEmailAndPassword(username, password).then(function() {
 				console.log("User Successfully Created");
-				$state.go('login');
+        auth.$signInWithEmailAndPassword(username, password).then(function() {
+    			console.log("User Login Successful");
+          UserService.setUser(username);
+    			$state.go('root.home');
+    		});
 			}).catch(function(error){
 				regCtrl.errMsg = true;
 				regCtrl.errorMessage = error.message;
