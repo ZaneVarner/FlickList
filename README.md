@@ -14,7 +14,7 @@ top level directory (same level as README.md)
     ```
 
 # To run unit tests
-1. Install Jasmine with the command ```npm install -g jasmine```
-2. Run ```jasmine [spec_filename]``` in the top level directory
-    - To run specific specs, specify their filename(s)
-    - To run all tests, don't specify any filenames
+1. Run ```npm run test``` in the top level directory
+2. To find code coverage, run ```npm run coverage``` in the same directory
+3. To generate nice-looking HTML code coverage report, run
+   ```npm run report```
