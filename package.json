@@ -4,8 +4,10 @@
   "description": "This repository contains all source code for the FlickList application. Source code contributed by Colby Saxton, John Shi, Zane Varner, George Vo.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jasmine spec/jasmine_examples/PlayerSpec.js",
+    "coverage": "nyc --exclude='spec/**' npm run test",
+    "report": "nyc report --reporter='lcov'"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,9 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "mongodb": "^3.3.3"
+    "istanbul": "^0.4.5",
+    "jasmine-node": "^3.0.0",
+    "mongodb": "^3.3.3",
+    "nyc": "^14.1.1"
   }
 }
