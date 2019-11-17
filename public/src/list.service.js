@@ -15,6 +15,7 @@ function ListService ($http, API_PATH) {
   };
 
   service.getUserLists = function (user) {
+    console.log(API_PATH + '/lists/' + user);
     return $http.get(API_PATH + '/lists/' + user).then(function (response) {
       return response.data;
     });
