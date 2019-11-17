@@ -65,9 +65,9 @@ def get_cast(imdbID):
 myclient = pymongo.MongoClient("mongodb+srv://zanevarner:test1234@cluster0-xblnp.mongodb.net/test?retryWrites=true&w=majority")
 
 # Create Database and Collection
-mydb = myclient["movies1_test_only"]
+mydb = myclient["movies1"]
 mycol = mydb["movies"]
-newcol = mydb["movies6"]
+newcol = mydb["movies2"]
 
 
 # CREATE A FUNCTION TO AUGMENT DOCUMENT AND ADD TO NEW COLLECTION
