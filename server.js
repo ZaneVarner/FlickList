@@ -3,6 +3,8 @@ const BodyParser = require("body-parser");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectID;
 
+const PORT = 8080;
+
 const CONNECTION_URL = "mongodb+srv://zanevarner:test1234@cluster0-xblnp.mongodb.net/test?retryWrites=true&w=majority";
 const DATABASE_NAME = "movies1";
 
@@ -19,7 +21,7 @@ app.use(function(req, res, next) {
 
 var database, movie_collection, review_collection;
 
-app.listen(8080, function () {
+app.listen(PORT, function () {
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, function (error, client) {
         if(error) {
             throw error;
