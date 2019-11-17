@@ -8,9 +8,13 @@ MovieSearchService.$inject = ['$http'];
 function MovieSearchService ($http) {
   var service = this;
 
+  service.getMovieByID = function (imdbID) {
+    return $http.get('http://localhost:8080/movies/' + imdbID).then(function (response) {
+      return response.data;
+    });
+  };
 
   service.searchMoviesByType = function (searchTerm, searchType, sortType) {
-
     var order = -1;
     var sortBy = sortType;
     if (sortType == 'sortNewestFirst') {
@@ -19,7 +23,6 @@ function MovieSearchService ($http) {
       sortBy = 'Year';
       order = 1;
     }
-
 
     if (searchType == 'Title') {
       return $http.get('http://localhost:8080/movies/title/' + searchTerm + '/' + sortBy + '/' + order)
@@ -43,25 +46,14 @@ function MovieSearchService ($http) {
         return response.data;
       });
     }
-
   };
 
-
-  // service.searchMovies = function (searchTerm, page) {
-  //   return $http({
-  //     method: "GET",
-  //     // url: "https://www.omdbapi.com/?s=star+wars&apikey=e94b6bc1",
-  //     url: "https://www.omdbapi.com/",
-  //     params: {
-  //       s: searchTerm,
-  //       type: "movie",
-  //       page: page,
-  //       apikey: "44664e4"
-  //     }
-  //   }).then(function (result) {
-  //     return result.data;
-  //   });
-  // };
+  service.searchMoviesByKeyword = function (keyword) {
+    return $http.get('http://localhost:8080/movies/' + keyword).then(function (response) {
+      console.log("A keyword search was called, obtained: " + response.data);
+      return response.data;
+    });
+  };
 
   service.getMovieDetail = function (movieTitle) {
     return $http({

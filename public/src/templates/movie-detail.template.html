@@ -1,5 +1,75 @@
 <h2>{{ movieDetailCtrl.movieDetail.Title }} ({{ movieDetailCtrl.movieDetail.Year }})</h2>
 
+<div class="row col-md-4 well well-md" style="margin: 15px;">
+  <button type="submit" class="btn btn-sm btn-secondary" data-target="#listModal" data-toggle="modal">
+    <div style="text-align: center; vertical-align: middle; margin: 15px">
+      <h5>Add to List</h5>
+    </div>
+  </button>
+</div>
+
+<div class="container">
+  <div id="listModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Add to List</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="form-group">
+              <label for="list-select">Select List</label>
+              <div name="list-select" class="form-group">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"
+                    ng-model="movieDetailCtrl.selectedAddListName" value="Watch List"
+                    ng-click="movieDetailCtrl.selectListToAddMovie()">
+                  <label class="custom-control-label" for="customRadio1">Watch List</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input"
+                    ng-model="movieDetailCtrl.selectedAddListName" value="Watched"
+                    ng-click="movieDetailCtrl.selectListToAddMovie()">
+                  <label class="custom-control-label" for="customRadio2">Watched</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input"
+                    ng-model="movieDetailCtrl.selectedAddListName" value="Favorites"
+                    ng-click="movieDetailCtrl.selectListToAddMovie()">
+                  <label class="custom-control-label" for="customRadio3">Favorites</label>
+                </div>
+                <div class="custom-control custom-radio"
+                  ng-repeat="list in movieDetailCtrl.customLists">
+                  <input type="radio" id="customRadio{{list.listName}}" name="customRadio" class="custom-control-input"
+                    ng-model="movieDetailCtrl.selectedAddListName" value="{{ list.listName }}"
+                    ng-click="movieDetailCtrl.selectListToAddMovie()">
+                  <label class="custom-control-label" for="customRadio{{list.listName}}">{{ list.listName }}</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="positionSelect">Insert at position:</label>
+              <select class="form-control" id="positionSelect"
+                ng-model="movieDetailCtrl.positionSelect">
+                <option>1</option>
+                <option ng-repeat="item in movieDetailCtrl.selectedAddList.list">
+                  {{ movieDetailCtrl.selectedAddList.list.indexOf(item) + 2 }}
+                </option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-small btn-primary"
+              ng-click="movieDetailCtrl.addToList()" data-dismiss="modal">Add</button>
+          <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div>
   <img src="{{ movieDetailCtrl.movieDetail.Poster }}"
     alt="Poster Not Available">
@@ -25,6 +95,9 @@
   {{ movieDetailCtrl.movieDetail.Plot }}
 </div>
 
+<br>
+<br>
+
 <div>
   <h4><a href="{{ movieDetailCtrl.netflixURL }}" target="_blank">
     Watch on Netflix
@@ -43,6 +116,9 @@
   </a></h4>
 </div>
 
+<br>
+<br>
+
 <div ng-if="movieDetailCtrl.trailerAvailable">
   <h3>Trailer:</h3>
   <iframe width="560" height="315"
@@ -58,4 +134,98 @@
 
 <br>
 <br>
+<br>
+<br>
+
+<div ng-if="movieDetailCtrl.currentRating">
+  <div><h5>User Rating:</h5></div>
+  <div class="card {{ movieDetailCtrl.borderType(movieDetailCtrl.currentRating) }} mb-3"
+    style="max-width: 20rem; margin: 15px;">
+    <div class="card-header" style="text-align: center;">
+      <h4 class="card-title">
+        {{ movieDetailCtrl.roundRating(movieDetailCtrl.currentRating) }} / 10
+      </h4>
+    </div>
+  </div>
+</div>
+
+<div ng-if="movieDetailCtrl.currentReviews.length > 0">
+  <div><h5>User Reviews:</h5></div>
+  <div ng-repeat="review in movieDetailCtrl.currentReviews"
+    style="display:inline-block; margin: 15px;">
+    <div class="card {{ movieDetailCtrl.borderType(review.rating) }} mb-3" style="max-width: 20rem;">
+      <div class="card-header">{{ review.rating }}/10</div>
+      <div class="card-body">
+        <h4 class="card-title">{{ review.headline }}</h4>
+        <p class="card-text">{{ review.review }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row col-md-4 well well-md" style="margin: 15px;">
+  <button type="submit" class="btn btn-sm btn-secondary" data-target="#reviewModal" data-toggle="modal">
+    <div style="text-align: center; vertical-align: middle; margin: 15px">
+      <h5>Create Review</h5>
+    </div>
+  </button>
+</div>
+
+<div class="container">
+  <div id="reviewModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Create Review</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="form-group">
+              <label for="rating">Overall rating</label>
+              <select name="rating" class="form-control" width="50%"
+                  ng-model="movieDetailCtrl.userRating">
+                  <!-- ng-change="movieSearchCtrl.resetResults()"> -->
+                <option></option>
+                <option>10</option>
+                <option>9</option>
+                <option>8</option>
+                <option>7</option>
+                <option>6</option>
+                <option>5</option>
+                <option>4</option>
+                <option>3</option>
+                <option>2</option>
+                <option>1</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="headline">Add a headline</label>
+              <input name="headline" class="form-control" maxlength="600"
+                ng-model="movieDetailCtrl.userReviewHeadline"
+                placeholder="What's most important to know?"></input>
+            </div>
+            <div class="form-group">
+              <label for="review">Write your review</label>
+              <textarea name="review" class="form-control" maxlength="600"
+                ng-model="movieDetailCtrl.userReview"
+                placeholder="What did you like or dislike?"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-small btn-primary"
+              ng-disabled="!movieDetailCtrl.userRating || !movieDetailCtrl.userReviewHeadline.trim() || !movieDetailCtrl.userReview.trim()"
+              ng-click="movieDetailCtrl.postRatingReview()" data-dismiss="modal">Post</button>
+          <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
 <a ui-sref="root.movie-search">Start New Search</a>

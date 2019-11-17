@@ -50,9 +50,9 @@
   Search for Movies
 </button>
 
-<div class="form-group">
+<div class="form-group" style="width: 20rem">
   <label for="searchTypeSelect">Select Search Type</label>
-  <select class="form-control" id="searchTypeSelect" width="50%"
+  <select class="form-control" id="searchTypeSelect"
       ng-model="movieSearchCtrl.searchType"
       ng-change="movieSearchCtrl.resetResults()">
     <option>Title</option>
@@ -112,79 +112,37 @@
   No results found for '{{ movieSearchCtrl.inputSearchTerm }}'.
 </div>
 
-<!-- <div ng-if="movieSearchCtrl.showMovies">
-  Displaying titles
-  {{ movieSearchCtrl.firstTitleOnPage }}-{{ movieSearchCtrl.lastTitleOnPage }}
-  of {{ movieSearchCtrl.totalResults }}.
-</div>
-
-<br>
-
-<button
-  ng-if="movieSearchCtrl.showMovies && movieSearchCtrl.thisPage > 1"
-  ng-click="movieSearchCtrl.searchMovies(movieSearchCtrl.searchTerm,
-            movieSearchCtrl.previousPage)">
-  Previous Page
-</button>
-<button
-  ng-if="!movieSearchCtrl.isLastPage && movieSearchCtrl.showMovies"
-  ng-click="movieSearchCtrl.searchMovies(movieSearchCtrl.searchTerm,
-            movieSearchCtrl.nextPage)">
-  Next Page
-</button> -->
-
-<!-- <br>
-
-<div>Previous Page: {{ movieSearchCtrl.previousPage }}</div>
-<div>This Page: {{ movieSearchCtrl.thisPage }}</div>
-<div>Next Page: {{ movieSearchCtrl.nextPage }}</div>
-<div>Total Pages: {{ movieSearchCtrl.totalPages }}</div>
-<div>Last Page: {{ movieSearchCtrl.isLastPage }}</div> -->
-
 <br>
 <br>
-
-<!-- <ul ng-if="movieSearchCtrl.showMovies">
-  <li ng-repeat="movie in movieSearchCtrl.movies"
-      ui-sref="root.movie-detail({movieTitle: movie.Title})">
-    <div>{{ movie.Title }} ({{ movie.Year }})</div>
-    <img src="{{ movie.Poster }}" alt="Poster Not Available"
-      height="100px">
-  </li>
-</ul> -->
 
 <div class="container col-lg-3 col-md-4 col-sm-6"
     style="display:inline-block;"
     height="1000px"
     ng-repeat="movie in movieSearchCtrl.movies"
-    ng-if="movieSearchCtrl.showMovies"
-    ui-sref="root.movie-detail({movieID: movie.imdbID})">
-  <div class="card border-primary mb-3" style="max-width: 20rem;">
+    ng-if="movieSearchCtrl.showMovies">
+  <div class="card border-primary mb-3" style="">
     <div class="card-header">
-      <h4 class="card-title" width="100%">{{ movie.Title }} </h4>
-      <h5 class="card-title" width="50%">({{ movie.Year }})</h5>
+      <a ui-sref="root.movie-detail({movieID: movie.imdbID})">
+        <h4 class="card-title" width="100%">{{ movie.Title }} </h4>
+        <h5 class="card-title" width="50%">({{ movie.Year }})</h5>
+      </a>
     </div>
     <div class="card-body">
       <img src="{{ movie.Poster }}" alt="Poster Not Available"
         width="100%">
       <p class="card-text">{{ movie.Plot }}</p>
-      <div>IMDb: {{ movie.imdbRating }}/10</div>
-      <div ng-if="movie.rottenTomatoesRating">Rotten Tomatoes: {{ movie.rottenTomatoesRating }}%</div>
-      <div ng-if="movie.metacriticRating">Metacritic: {{ movie.metacriticRating }}/100</div>
+      <div>
+        <img src="images/imdb_logo.png" width="30px" style="margin: 5px" alt="IMDb Logo">
+         {{ movie.imdbRating }} / 10
+      </div>
+      <div ng-if="movie.rottenTomatoesRating">
+        <img src="images/rt_logo.png" width="37px" style="margin: 5px" alt="Rotten Tomatoes Logo">
+         {{ movie.rottenTomatoesRating }}%
+      </div>
+      <div ng-if="movie.metacriticRating">
+        <img src="images/metacritic_logo.png" width="30px" style="margin: 5px" alt="Metacritic Logo">
+         {{ movie.metacriticRating }} / 100
+      </div>
     </div>
   </div>
 </div>
-
-
-<!-- <div class="card border-primary mb-3" style="max-width: 20rem;"
-    ng-repeat="movie in movieSearchCtrl.movies"
-    ui-sref="root.movie-detail({movieTitle: movie.Title})">
-  <div class="card-header">
-    <h4 class="card-title">{{ movie.Title }} ({{ movie.Year }})</h4>
-  </div>
-  <div class="card-body">
-    <img src="{{ movie.Poster }}" alt="Poster Not Available"
-      height="100px">
-    <p class="card-text">{{ movie.Plot }}</p>
-  </div>
-</div> -->

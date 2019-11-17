@@ -57,6 +57,30 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
             return MovieSearchService.getMovieDetail($stateParams.movieID);
           }]
       }
+    })
+
+    .state('root.my-lists', {
+      url: '/my-lists',
+      templateUrl: 'src/templates/my-lists.template.html',
+      controller: 'MyListsController',
+      controllerAs: 'myListsCtrl'
+    })
+
+    .state('root.list', {
+      url: '/list/{listName}',
+      templateUrl: 'src/templates/list.template.html',
+      controller: 'ListController',
+      controllerAs: 'listCtrl',
+      resolve: {
+        listName: ['$stateParams', function ($stateParams) {
+          return $stateParams.listName;
+        }],
+        listDetail: ['$stateParams', 'ListService', 'UserService', function ($stateParams, ListService, UserService) {
+          var user = UserService.getUser();
+          var listName = $stateParams.listName;
+          return ListService.getListData(user, listName);
+        }]
+      }
     });
 
 }
