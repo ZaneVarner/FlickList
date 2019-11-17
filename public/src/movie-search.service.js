@@ -4,12 +4,12 @@
 angular.module('MovieSearch')
 .service('MovieSearchService', MovieSearchService);
 
-MovieSearchService.$inject = ['$http'];
-function MovieSearchService ($http) {
+MovieSearchService.$inject = ['$http', 'API_PATH'];
+function MovieSearchService ($http, API_PATH) {
   var service = this;
 
   service.getMovieByID = function (imdbID) {
-    return $http.get('http://localhost:8080/movies/' + imdbID).then(function (response) {
+    return $http.get(API_PATH + '/movies/' + imdbID).then(function (response) {
       return response.data;
     });
   };
@@ -25,21 +25,21 @@ function MovieSearchService ($http) {
     }
 
     if (searchType == 'Title') {
-      return $http.get('http://localhost:8080/movies/title/' + searchTerm + '/' + sortBy + '/' + order)
+      return $http.get(API_PATH + '/movies/title/' + searchTerm + '/' + sortBy + '/' + order)
           .then(function (response) {
         console.log(searchType);
         console.log(response.data);
         return response.data;
       });
     } else if (searchType == 'Cast') {
-      return $http.get('http://localhost:8080/movies/cast/' + searchTerm + '/' + sortBy + '/' + order)
+      return $http.get(API_PATH + '/movies/cast/' + searchTerm + '/' + sortBy + '/' + order)
           .then(function (response) {
         console.log(searchType);
         console.log(response.data);
         return response.data;
       });
     } else if (searchType == 'Genre') {
-      return $http.get('http://localhost:8080/movies/genre/' + searchTerm + '/' + sortBy + '/' + order)
+      return $http.get(API_PATH + '/movies/genre/' + searchTerm + '/' + sortBy + '/' + order)
           .then(function (response) {
         console.log(searchType);
         console.log(response.data);
@@ -49,7 +49,7 @@ function MovieSearchService ($http) {
   };
 
   service.searchMoviesByKeyword = function (keyword) {
-    return $http.get('http://localhost:8080/movies/' + keyword).then(function (response) {
+    return $http.get(API_PATH + '/movies/' + keyword).then(function (response) {
       console.log("A keyword search was called, obtained: " + response.data);
       return response.data;
     });

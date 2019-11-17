@@ -5,26 +5,26 @@
 angular.module('FlickList')
 .service('RatingReviewService', RatingReviewService);
 
-RatingReviewService.$inject = ['$http'];
-function RatingReviewService ($http) {
+RatingReviewService.$inject = ['$http', 'API_PATH'];
+function RatingReviewService ($http, API_PATH) {
   var service = this;
 
   // Review methods
 
   service.getReviewsForMovie = function (imdbID) {
-    return $http.get('http://localhost:8080/reviews/' + imdbID).then(function (response) {
+    return $http.get(API_PATH + '/reviews/' + imdbID).then(function (response) {
       return response.data;
     });
   };
 
   service.getUserReviewForMovie = function (imdbID, user) {
-    return $http.get('http://localhost:8080/reviews/' + imdbID + '/' + user).then(function (response) {
+    return $http.get(API_PATH + '/reviews/' + imdbID + '/' + user).then(function (response) {
       return response.data;
     });
   };
 
   service.deleteReviewForMovie = function (id) {
-    return $http.delete('http://localhost:8080/reviews/delete/' + id).then(function (response) {
+    return $http.delete(API_PATH + '/reviews/delete/' + id).then(function (response) {
       return response.data;
     });
   };
@@ -36,7 +36,7 @@ function RatingReviewService ($http) {
                   "headline": headline,
                   "review": review };
     return $http({
-        url: 'http://localhost:8080/reviews/post',
+        url: API_PATH + '/reviews/post',
         method: 'POST',
         data: entry
     }).then(function (response) {
@@ -48,13 +48,13 @@ function RatingReviewService ($http) {
   // Rating methods
 
   service.getRating = function (imdbID) {
-    return $http.get('http://localhost:8080/ratings/' + imdbID).then(function (response) {
+    return $http.get(API_PATH + '/ratings/' + imdbID).then(function (response) {
       return response.data;
     });
   };
 
   service.deleteRating = function (id) {
-    return $http.delete('http://localhost:8080/ratings/delete/' + id).then(function (response) {
+    return $http.delete(API_PATH + '/ratings/delete/' + id).then(function (response) {
       return response.data;
     });
   };
@@ -64,7 +64,7 @@ function RatingReviewService ($http) {
                   "rating_count": rating_count,
                   "rating_avg": rating_avg };
     return $http({
-      url: 'http://localhost:8080/ratings/post',
+      url: API_PATH + '/ratings/post',
       method: 'POST',
       data: entry
     }).then(function (response) {

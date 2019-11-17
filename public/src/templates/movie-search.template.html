@@ -10,10 +10,11 @@
 <input type="text" ng-model="movieSearchCtrl.inputSearchTerm"
   ng-if="movieSearchCtrl.searchType != 'Genre'">
 
-<div class="form-group" ng-if="movieSearchCtrl.searchType == 'Genre'">
+<div class="form-group" style="width: 20rem"
+  ng-if="movieSearchCtrl.searchType == 'Genre'">
   <label for="genreSelect">Select Genre</label>
-  <select class="form-control" id="genreSelect" width="50%"
-      ng-model="movieSearchCtrl.searchGenre">
+  <select class="form-control" id="genreSelect"
+    ng-model="movieSearchCtrl.searchGenre">
     <option>Action</option>
     <option>Adventure</option>
     <option>Animation</option>
