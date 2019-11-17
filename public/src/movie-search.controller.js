@@ -9,6 +9,8 @@ function MovieSearchController(MovieSearchService) {
 
   var movieSearchCtrl = this;
 
+  movieSearchCtrl.inputSearchTerm = '';
+
   movieSearchCtrl.showMovies = false;
   movieSearchCtrl.error = {
     noResultFound: false

@@ -4,8 +4,8 @@
 angular.module('FlickList')
 .controller('RegisterController', RegisterController);
 
-RegisterController.$inject = ['$firebaseAuth', '$state', 'UserService'];
-function RegisterController ($firebaseAuth, $state, UserService) {
+RegisterController.$inject = ['$firebaseAuth', '$state', 'UserService', 'ListService'];
+function RegisterController ($firebaseAuth, $state, UserService, ListService) {
   var regCtrl = this;
 
   regCtrl.register = function () {
@@ -19,7 +19,17 @@ function RegisterController ($firebaseAuth, $state, UserService) {
         auth.$signInWithEmailAndPassword(username, password).then(function() {
     			console.log("User Login Successful");
           UserService.setUser(username);
-    			$state.go('root.home');
+
+          // Create the 3 main lists for the user
+
+          ListService.postList(username, 'Watch List', []).then(function (response) {
+            ListService.postList(username, 'Watched', []).then(function (response) {
+              ListService.postList(username, 'Favorites', []).then(function (response) {
+                $state.go('root.home');
+              });
+            });
+          });
+
     		});
 			}).catch(function(error){
 				regCtrl.errMsg = true;

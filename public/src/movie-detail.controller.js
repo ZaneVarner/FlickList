@@ -54,24 +54,6 @@ function MovieDetailController (movieDetail, $scope, $timeout, $sce, ListService
           movieDetailCtrl.customLists.push(response[list]);
         }
       }
-      if (!response.find(list => list.listName == 'Watch List')) {
-        var post_response = ListService.postList(user, 'Watch List', []).then(function (response) {
-          movieDetailCtrl.userLists.push({ 'user': user, 'listName': 'Watch List', 'list': [] });
-          return response;
-        });
-      }
-      if (!response.find(list => list.listName == 'Watched')) {
-        var post_response = ListService.postList(user, 'Watched', []).then(function (response) {
-          movieDetailCtrl.userLists.push({ 'user': user, 'listName': 'Watched', 'list': [] });
-          return response;
-        });
-      }
-      if (!response.find(list => list.listName == 'Favorites')) {
-        var post_response = ListService.postList(user, 'Favorites', []).then(function (response) {
-          movieDetailCtrl.userLists.push({ 'user': user, 'listName': 'Favorites', 'list': [] });
-          return response;
-        });
-      }
 
       return response;
     });
