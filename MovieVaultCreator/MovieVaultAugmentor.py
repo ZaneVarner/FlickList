@@ -49,7 +49,7 @@ def get_cast(imdbID):
 		# Add result to cast list and character dictionary
 		cast_list.append(name)
 		# Dictionaries cannot contain periods within keys
-		cast_dict[name.replace('.', '')] = character
+		cast_dict[name.replace('.', '%')] = character
 		cast_size += 1
 
 		# Only add up to 10 cast members

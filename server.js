@@ -1,4 +1,6 @@
 const Express = require("express");
+const fs = require("fs");
+const https = require("https");
 const BodyParser = require("body-parser");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectID;
@@ -21,7 +23,10 @@ app.use(function(req, res, next) {
 
 var database, movie_collection, review_collection;
 
-app.listen(PORT, function () {
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app).listen(PORT, function () {
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, function (error, client) {
         if(error) {
             throw error;
@@ -44,6 +49,18 @@ MOVIE SEARCHING METHODS
 app.get("/movies/:imdbID", function (request, response) {
   var query = { 'imdbID': request.params.imdbID };
   movie_collection.findOne(query, function (error, result) {
+    if (error) {
+      return response.status(500).send(error);
+    }
+    response.send(result);
+  });
+});
+
+// Get all movies in a given year
+app.get("/movies/:year", function (request, response) {
+  var query = { "Year": parseInt(request.params.year) };
+  var mysort = { "imdbVotes": -1 };
+  movie_collection.find(query).sort(mysort).limit(10).toArray(function (error, result) {
     if (error) {
       return response.status(500).send(error);
     }
