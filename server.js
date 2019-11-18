@@ -57,7 +57,7 @@ app.get("/movies/:imdbID", function (request, response) {
 });
 
 // Get all movies in a given year
-app.get("/movies/:year", function (request, response) {
+app.get("/movies/popular/:year", function (request, response) {
   var query = { "Year": parseInt(request.params.year) };
   var mysort = { "imdbVotes": -1 };
   movie_collection.find(query).sort(mysort).limit(10).toArray(function (error, result) {
