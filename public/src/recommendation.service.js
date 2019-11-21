@@ -8,10 +8,12 @@ RecommendationService.$inject = ['$http', 'API_PATH'];
 function RecommendationService ($http, API_PATH) {
   var service = this;
 
-  service.getRecommendations = function (topUserMovies) {
-    var inputList = topUserMovies;
-
-
+  service.getRecommendations = function (userMovieName, UserMovieGenre) {
+    var sameGenreMovies = $http.get(API_PATH + '/movies/genre/' + userMovieGenre).then(function (response) {
+      return response.data;
+    });
+    console.log(sameGenreMovies);
+    return sameGenreMovies;
   };
 
   service.getPopularNow = function (year) {
