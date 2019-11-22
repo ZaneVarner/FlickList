@@ -10,22 +10,21 @@ function RecommendationService ($http, API_PATH) {
   Heap thisHeap = new Heap(5);
 
   service.getRecommendations = function (userMovie) {
-    var sameGenreMovies = $http.get(API_PATH + '/movies/genre/' + userMovie.genre).then(function (response) {
+    var sameGenreMovies = $http.get(API_PATH + '/movies/genre/' + userMovie['Genre'][0]).then(function (response) {
       return response.data;
     });
     var movieList = sameGenreMovies.toArray();
     for(var movie : movieList) {
-      varMovieScore = 0;
-      if(movie.director = userMovie.director) {
-        varMovieScore++;
+      var movieScore = 0;
+
+      for(var inputCastMember : movie['Cast']) {
+        for(var originalCastMember : userMovie['Cast']) {
+          if(inputCastMember.equals(originalCastMember)) {
+            movieScore++;
+          }
+        }
       }
-      if(movie.primaryActor = userMovie.primaryDirector) {
-        varMovieScore++;
-      }
-      if(movie.secondaryActor = userMovie.secondaryActor) {
-        varMovieScore++;
-      }
-      varMovieScore += 1 / Math.abs(userMovie.year - movie.year);
+      movieScore += 1 / Math.abs(userMovie['year'] - movie['year']);
       thisHeap.insertCheck(varMovieScore, movie);
     }
 
