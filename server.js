@@ -1,6 +1,6 @@
 const Express = require("express");
-const fs = require("fs");
-const https = require("https");
+// const fs = require("fs");
+// const https = require("https");
 const BodyParser = require("body-parser");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectID;
@@ -23,10 +23,11 @@ app.use(function(req, res, next) {
 
 var database, movie_collection, review_collection;
 
-https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
-}, app).listen(PORT, function () {
+// https.createServer({
+//   key: fs.readFileSync('server.key'),
+//   cert: fs.readFileSync('server.cert')
+// }, app).listen(PORT, function () {
+app.listen(PORT, function () {
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, function (error, client) {
         if(error) {
             throw error;
