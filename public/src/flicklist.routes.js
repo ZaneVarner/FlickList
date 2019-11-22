@@ -81,6 +81,13 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
           return ListService.getListData(user, listName);
         }]
       }
+    })
+
+    .state('root.recommendation', {
+      url: '/recommendation',
+      templateUrl: 'src/templates/recommendation.template.html',
+      controller: 'RecommendationController',
+      controllerAs: 'recommendCtrl'
     });
 
 }

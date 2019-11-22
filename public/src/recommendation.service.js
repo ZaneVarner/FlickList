@@ -20,6 +20,12 @@ function RecommendationService ($http, API_PATH) {
     });
   };
 
+  service.getMovieByKeyword = function (title) {
+    return $http.get(API_PATH + '/movies/keyword/title/' + title).then(function (response) {
+      return response.data;
+    });
+  };
+
 }
 
 })();
