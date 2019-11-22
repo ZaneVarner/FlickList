@@ -1,15 +1,83 @@
-<h2>Welcome {{ homeCtrl.username }}</h2>
+<div style="margin-top: 25px; margin-left: 25px; margin-bottom: 25px;">
+	<h2>Welcome {{ homeCtrl.username }}!</h2>
+</div>
 
-<h3>
-	<a ui-sref="root.movie-search">Click to search for movies!</a>
-</h3>
+<div style="width: 100%;">
+	<div class="container col-lg-4"
+	    style="float: left;">
+	  <div class="card border-primary mb-3" style="">
+	    <div class="card-header" style="vertical-align: middle;">
+	      <h3><a ui-sref="root.movie-search">
+	        Search for Movies
+	      </a></h3>
+	    </div>
+	    <div class="card-body">
+				<h5>Browse our huge database of movies, watch trailers, leave reviews, and more!</h5>
+	    </div>
+	  </div>
+	</div>
 
-<br>
-<br>
+	<div class="container col-lg-4"
+	    style="float: left;">
+	  <div class="card border-primary mb-3" style="">
+	    <div class="card-header" style="vertical-align: middle;">
+	      <h3><a ui-sref="root.my-lists">
+	        My Lists
+	      </a></h3>
+	    </div>
+	    <div class="card-body">
+				<h5>Build and customize your own personal movie lists -- Watch List, Watched, Favorites, and more!</h5>
+	    </div>
+	  </div>
+	</div>
 
-<button type="button" name="button" ng-click="homeCtrl.getPopularNow()">Popular</button>
-<button type="button" name="bigbutton" ng-click="homeCtrl.getRecommendations()">Recommendations</button>
+	<div class="container col-lg-4"
+	    style="float: left;">
+	  <div class="card border-primary mb-3" style="">
+	    <div class="card-header" style="vertical-align: middle;">
+	      <h3><a ui-sref="root.recommendation">
+	        Recommendations (Beta)
+	      </a></h3>
+	    </div>
+	    <div class="card-body">
+				<h5>Explore recommendations based on your Favorite movies!</h5>
+	    </div>
+	  </div>
+	</div>
+</div>
 
-<br><br>
 
-<button type="button" name="button" ng-click="homeCtrl.getMovieByKeyword()">Keyword</button>
+<div style="margin-top: 300px; margin-left: 25px; margin-bottom: 25px;">
+	<h2>Explore Popular Movies</h2>
+</div>
+
+<div class="container col-lg-3 col-md-4 col-sm-6"
+    style="display:inline-block;"
+    height="1000px"
+    ng-repeat="movie in homeCtrl.popularMovies">
+  <div class="card border-primary mb-3" style="">
+    <div class="card-header">
+      <a ui-sref="root.movie-detail({movieID: movie.imdbID})">
+        <h4 class="card-title" width="100%">{{ movie.Title }} </h4>
+        <h5 class="card-title" width="50%">({{ movie.Year }})</h5>
+      </a>
+    </div>
+    <div class="card-body">
+      <img src="{{ movie.Poster }}" alt="Poster Not Available"
+        width="100%">
+      <p class="card-text">{{ movie.Plot }}</p>
+      <div>
+        <img src="images/imdb_logo.png" width="30px" style="margin: 5px" alt="IMDb Logo">
+         {{ movie.imdbRating }} / 10
+      </div>
+      <div ng-if="movie.rottenTomatoesRating">
+        <img src="images/rt_logo.png" width="37px" style="margin: 5px" alt="Rotten Tomatoes Logo">
+         {{ movie.rottenTomatoesRating }}%
+      </div>
+      <div ng-if="movie.metacriticRating">
+        <img src="images/metacritic_logo.png" width="30px" style="margin: 5px" alt="Metacritic Logo">
+         {{ movie.metacriticRating }} / 100
+      </div>
+    </div>
+  </div>
+</div>

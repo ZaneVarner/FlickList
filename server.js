@@ -60,7 +60,7 @@ app.get("/movies/:imdbID", function (request, response) {
 app.get("/movies/popular/:year", function (request, response) {
   var query = { "Year": parseInt(request.params.year) };
   var mysort = { "imdbVotes": -1 };
-  movie_collection.find(query).sort(mysort).limit(10).toArray(function (error, result) {
+  movie_collection.find(query).sort(mysort).limit(40).toArray(function (error, result) {
     if (error) {
       return response.status(500).send(error);
     }
@@ -69,18 +69,17 @@ app.get("/movies/popular/:year", function (request, response) {
 });
 
 // Get a movie by keyword, sort by text score
-app.get("/movies/:keyword", function (request, response) {
+app.get("/movies/keyword/title/:keyword", function (request, response) {
     console.log('Searched this keyword: ' + request.params.keyword);
     movie_collection.createIndex({
-      Title: "text",
-      Genre: "text",
-      Cast: "text"
+      Title: "text"
+      // Genre: "text",
+      // Cast: "text"
     });
     movie_collection.find(
       { $text: { $search: request.params.keyword } },
       { projection: { score: { $meta: 'textScore' } } })
-    .sort( { score: { $meta: "textScore" } } ).limit(20)
-    // .sort( { imdbVotes: -1 } ).limit(20)
+    .sort( { score: { $meta: "textScore" } } ).limit(100)
     .toArray(function (error, result) {
         if(error) {
             return response.status(500).send(error);
