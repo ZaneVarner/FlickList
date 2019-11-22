@@ -115,6 +115,31 @@ app.get("/movies/title/:title/:sort/:order", function (request, response) {
         if(error) {
             return response.status(500).send(error);
         }
+        (if result.length == 0){ //no results found
+          result.push(movie_collection.find( { $text: { $search: input } } ));
+        }
+        (if result.length == 0){ //no results found
+          var titleArray = movie_collection.distinct(title); //save all titles to an array
+          var levDistArray = titleArray; //copy title array to store distance values
+          for (i=0; i<titleArray.length; i++){ //loop iterating through all titles
+            levDistArray[i] = levDist(input,titleArray[i]); //store dist value in array
+            if (i>0){
+              var j = i;
+              while (levDistArray[j]<levDistArray[j-1]){ //while the lev value is less than the value before it
+                var levHolder = levDistArray[j-1]; //sort the array
+                levDistArray[j-1] = levDistArray[j];
+                levDistArray[j] = levHolder;
+                var titleHolder = titleArray[j-1];
+                titleArray[j-1] = titleArray[j];
+                levDistArray[j] = titleHolder;
+                j--;
+              }
+            }
+          }
+          for (i=0; i<titleArray.length; i++){ //add movie with matching title to result
+            result.push(movie_collection.find({title: titleArray[i] }));
+          }
+        }
         response.send(result);
     });
 });
@@ -278,3 +303,32 @@ app.post("/lists/post", function (request, response) {
     response.send(result);
   });
 });
+
+function levDist(a, b){
+  if(a.length == 0) return b.length;
+    if(b.length == 0) return a.length;
+      var matrix = [];
+        // increment along the first column of each row
+        var i;
+        for(i = 0; i <= b.length; i++){
+          matrix[i] = [i];
+        }
+        // increment each column in the first row
+        var j;
+        for(j = 0; j <= a.length; j++){
+          matrix[0][j] = j;
+        }
+        // Fill in the rest of the matrix
+        for(i = 1; i <= b.length; i++){
+          for(j = 1; j <= a.length; j++){
+            if(b.charAt(i-1) == a.charAt(j-1)){
+              matrix[i][j] = matrix[i-1][j-1];
+            } else {
+              matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
+                                            Math.min(matrix[i][j-1] + 1, // insertion
+                                                    matrix[i-1][j] + 1)); // deletion
+            }
+          }
+        }
+        return matrix[b.length][a.length];
+      };
