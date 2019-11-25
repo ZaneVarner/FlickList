@@ -33,7 +33,7 @@ app.listen(PORT, function () {
             throw error;
         }
         database = client.db(DATABASE_NAME);
-        movie_collection = database.collection("movies");
+        movie_collection = database.collection("movies2");
         review_collection = database.collection("reviews");
         rating_collection = database.collection("ratings");
         list_collection = database.collection("lists");
