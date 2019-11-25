@@ -24,7 +24,23 @@ function RecommendationService ($http, API_PATH) {
            }
          }
        }
+
+       if(movie['Directors'][0].equals(userMovie['Directors'][0])) {
+         movieScore++;
+       }
+
+       for(var writer : movie['Writers']) {
+         for(var originalWriter : userMovie['Writers']) {
+           writer = writer.split(" (")[0];
+           originalWriter = originalWriter.split(" (")[0];
+           if(writer.equals(originalWriter)) {
+             movieScore++;
+           }
+         }
+       }
+
        movieScore += 1 / Math.abs(userMovie['year'] - movie['year']);
+
        thisHeap.insertCheck(varMovieScore, movie);
      }
 
