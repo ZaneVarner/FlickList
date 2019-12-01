@@ -1,5 +1,5 @@
-describe('testing controllers', function(){
-  var mockDataSvc, rootScope, scope, passPromise, firstController, secondController;
+describe('wat', function(){
+  var mockDataSvc, rootScope, scope, passPromise, secondController;
 
   beforeEach(function(){
     module(function($provide){
@@ -18,7 +18,7 @@ describe('testing controllers', function(){
       }]);
     });
 
-    module('controllers');
+    module('FlickList');
   });
 
   beforeEach(inject(function($rootScope, $controller, dataSvc){
@@ -30,7 +30,7 @@ describe('testing controllers', function(){
 
   describe('secondController', function(){
     beforeEach(inject(function($controller){
-      secondController = $controller('SecondController',{
+      secondController = $controller('HomeController',{
         dataSvc: mockDataSvc
       });
     }));
