@@ -1,9 +1,9 @@
 angular.module('FlickList', [])
-  .controller('HomeController', function(dataSvc){
+  .controller('HomeController', function(UserService){
     var vm=this;
 
     vm.saveData = function(){
-      dataSvc.save(vm.bookDetails).then(function(result){
+        UserService.save(vm.bookDetails).then(function(result){
         vm.bookDetails = {};
         vm.bookForm.$setPristine();
       });
