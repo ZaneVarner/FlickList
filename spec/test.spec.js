@@ -51,8 +51,9 @@ describe('wat', function(){
     }));
 
     it('should get recommended movies', function(){
+      passPromise = true;
       secondController.$onInit();
-      console.log(secondController.popularMovies);
+      rootScope.$digest();
     });
   });
 });
