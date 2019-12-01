@@ -18,9 +18,9 @@ module.exports = function(config) {
       "node_modules/angular/angular.js",
       "node_modules/angular-mocks/angular-mocks.js",
       "public/lib/angular-ui-router.min.js",
-      "public/lib/angularfire.min.js",
-      "public/src/*.js",
-      "spec/*.js"
+      "public/src/flicklist.module.js",
+      "public/src/home.controller.js",
+      "spec/home.controller.spec.js"
     ],
 
 
