@@ -1,5 +1,5 @@
-describe('wat', function(){
-  var mockUserService, mockRecService, rootScope, scope, passPromise, secondController;
+describe('Test', function(){
+  var mockUserService, mockRecService, rootScope, scope, passPromise, homeCtrl;
 
   beforeEach(function(){
     module(function($provide){
@@ -42,17 +42,17 @@ describe('wat', function(){
     mockRecService = RecommendationService;
   }));
 
-  describe('secondController', function(){
+  describe('HomeController', function(){
     beforeEach(inject(function($controller){
-      secondController = $controller('HomeController',{
+      homeCtrl = $controller('HomeController',{
         UserService: mockUserService,
         RecommendationService: mockRecService
       });
     }));
 
-    it('should get recommended movies', function(){
+    it('should initialize properly', function(){
       passPromise = true;
-      secondController.$onInit();
+      homeCtrl.$onInit();
       rootScope.$digest();
     });
   });
