@@ -2,6 +2,16 @@
 
 <br><br><br>
 
+<div style="margin-left: 20px"
+  ng-if="MyListsController.watchList.list.length > 0">
+  <h5>
+    <h5> woof woof </h5>
+    <a ui-sref="root.list({listName: 'Watch List'})">
+      <strong>Go to Watch List >>></strong>
+    </a>
+  </h5>
+</div>
+
 <div class="alert alert-primary"
   ng-if="MyListsController.watchList.list.length == 0"
   style="margin: 15px; display: inline-block;">
