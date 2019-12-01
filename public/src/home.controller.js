@@ -1,16 +1,33 @@
-(function () {
-'use strict';
+// angular.module('FlickList')
+// .controller('HomeController', function() {
+//   var homeCtrl = this;
 
-angular.module('FlickList')
-.controller('HomeController', HomeController);
+//   // homeCtrl.$onInit = function () {
+//   //   homeCtrl.username = UserService.getUser();
+//   // };
+// });
 
-HomeController.$inject = ['UserService'];
-function HomeController (UserService) {
-  var homeCtrl = this;
 
-  homeCtrl.$onInit = function () {
-    homeCtrl.username = UserService.getUser();
-  };
-}
+angular.module('controllers', [])
+  .controller('FirstController', ['$scope', 'dataSvc', function($scope, dataSvc){
+    $scope.saveData = function(){
+      dataSvc.save($scope.bookDetails).then(function(result){
+        $scope.bookDetails = {};
+        $scope.bookForm.$setPristine();
+      });
+    };
 
-})();
+    $scope.numberPattern = /^\d*$/;
+  }])
+  .controller('SecondController', function(dataSvc){
+    var vm=this;
+
+    vm.saveData = function(){
+      dataSvc.save(vm.bookDetails).then(function(result){
+        vm.bookDetails = {};
+        vm.bookForm.$setPristine();
+      });
+    };
+
+    vm.numberPattern = /^\d*$/;
+  });

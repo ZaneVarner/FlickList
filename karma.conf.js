@@ -17,7 +17,8 @@ module.exports = function(config) {
     files: [
       "public/lib/angular.min.js",
       "public/lib/angular-mocks.js",
-      "spec/**/*[sS]pec.js"
+      "test.spec.js",
+      "public/src/home.controller.js"
     ],
 
 
@@ -62,7 +63,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
 
 
     // Continuous Integration mode
