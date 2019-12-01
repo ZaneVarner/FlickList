@@ -1,5 +1,5 @@
 describe('wat', function(){
-  var mockUserService, rootScope, scope, passPromise, secondController;
+  var mockUserService, mockRecService, rootScope, scope, passPromise, secondController;
 
   beforeEach(function(){
     module(function($provide){
@@ -16,21 +16,37 @@ describe('wat', function(){
           getUser: getUser
         };
       }]);
+
+      $provide.factory('RecommendationService', ['$q', function($q){
+        function getPopularMovies(data){
+          if(passPromise){
+            return $q.when();
+          } else {
+            return $q.reject();
+          }
+        }
+
+        return {
+          getPopularMovies: getPopularMovies
+        };
+      }]);
     });
 
     module('FlickList');
   });
 
-  beforeEach(inject(function($rootScope, $controller, UserService){
+  beforeEach(inject(function($rootScope, $controller, UserService, RecommendationService){
     rootScope = $rootScope;
     scope = $rootScope.$new();
     mockUserService = UserService;
+    mockRecService = RecommendationService;
   }));
 
   describe('secondController', function(){
     beforeEach(inject(function($controller){
       secondController = $controller('HomeController',{
-        UserService: mockUserService
+        UserService: mockUserService,
+        RecommendationService: mockRecService
       });
     }));
 
@@ -55,6 +71,11 @@ describe('wat', function(){
 
       expect(secondController.bookDetails).toEqual({});
       expect(secondController.bookForm.$setPristine).toHaveBeenCalled();
+    });
+
+    it('should get recommended movies', function(){
+      secondController.getPopularMovies();
+      console.log(secondController.popularMovies);
     });
   });
 });
