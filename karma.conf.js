@@ -15,23 +15,23 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      "public/lib/angular.min.js",
-      "public/lib/angular-mocks.js",
-      "test.spec.js",
-      "public/src/home.controller.js"
+      "node_modules/angular/angular.js",
+      "node_modules/angular-mocks/angular-mocks.js",
+      "public/lib/angular-ui-router.min.js",
+      "public/lib/angularfire.min.js",
+      "spec/*.js"
     ],
 
 
     // list of files / patterns to exclude
     exclude: [
-      "spec/jasmine_examples/PlayerSpec.js"
     ],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'public/src/*.js': 'coverage'
+      'spec/*.js': 'coverage'
     },
 
     // Activate coverage reporter
@@ -63,7 +63,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['ChromeHeadless'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
