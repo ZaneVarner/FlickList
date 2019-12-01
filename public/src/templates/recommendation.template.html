@@ -3,3 +3,11 @@
 <br><br><br>
 
 <h4>This feature is coming soon.</h4>
+
+<div class="alert alert-primary"
+  ng-if="myListsCtrl.watchList.list.length == 0"
+  style="margin: 15px; display: inline-block;">
+  <strong>Oh snap! This list is empty.</strong>
+  <br>
+  <a class="alert-link" ui-sref="root.movie-search">Try adding some movies to your watchList</a> and then come back again.
+</div>

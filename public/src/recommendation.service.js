@@ -7,7 +7,7 @@ angular.module('FlickList')
 RecommendationService.$inject = ['$http', 'API_PATH'];
 function RecommendationService ($http, API_PATH) {
   var service = this;
-   Heap thisHeap = new Heap(5);
+//   Heap thisHeap = new Heap(5);
 
 //   service.getRecommendations = function (userMovie) {
 //     var sameGenreMovies = $http.get(API_PATH + '/movies/genre/' + userMovie['Genre'][0]).then(function (response) {
@@ -68,41 +68,41 @@ function RecommendationService ($http, API_PATH) {
 
 })();
 
- class Heap {
-
-   var heapSize;
-   var lowestValue;
-   var heap = [];
-
-   constructor(thisHeapSize) {
-     heapSize = thisHeapSize;
-   }
-
-   insertCheck(newValue, movie) {
-     var movieScoreMapping = [newValue, movie];
-     if(heap.length < heapSize) {
-       heap.push(movieScoreMapping);
-       if(newValue < lowestValue) {
-         lowestValue = newValue;
-       }
-       heap.sort(function(a, b){return b[0] - a[0]});
-     }
-     else if(newValue > lowestValue) {
-       heap.pop();
-       heap.push(movieScoreMapping);
-       heap.sort(function(a, b){return b[0] - a[0]});
-     }
-   }
-
-   getHeap() {
-     return heap;
-   }
-
-   getLowestValue() {
-     return lowestValue;
-   }
-
-   getHeapSize() {
-     return heapSize;
-   }
- }
+// class Heap {
+//
+//   var heapSize;
+//   var lowestValue;
+//   var heap = [];
+//
+//   constructor(thisHeapSize) {
+//     heapSize = thisHeapSize;
+//   }
+//
+//   insertCheck(newValue, movie) {
+//     var movieScoreMapping = [newValue, movie];
+//     if(heap.length < heapSize) {
+//       heap.push(movieScoreMapping);
+//       if(newValue < lowestValue) {
+//         lowestValue = newValue;
+//       }
+//       heap.sort(function(a, b){return b[0] - a[0]});
+//     }
+//     else if(newValue > lowestValue) {
+//       heap.pop();
+//       heap.push(movieScoreMapping);
+//       heap.sort(function(a, b){return b[0] - a[0]});
+//     }
+//   }
+//
+//   getHeap() {
+//     return heap;
+//   }
+//
+//   getLowestValue() {
+//     return lowestValue;
+//   }
+//
+//   getHeapSize() {
+//     return heapSize;
+//   }
+// }
