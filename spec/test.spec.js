@@ -4,7 +4,7 @@ describe('wat', function(){
   beforeEach(function(){
     module(function($provide){
       $provide.factory('UserService', ['$q', function($q){
-        function save(data){
+        function getUser(){
           if(passPromise){
             return $q.when();
           } else {
@@ -13,7 +13,7 @@ describe('wat', function(){
         }
 
         return {
-          save: save
+          getUser: getUser
         };
       }]);
     });
