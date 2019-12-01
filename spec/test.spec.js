@@ -50,31 +50,8 @@ describe('wat', function(){
       });
     }));
 
-    it('should have set pattern to match numbers', function(){
-      expect(secondController.numberPattern).toBeDefined();
-      expect(secondController.numberPattern.test("100")).toBe(true);
-      expect(secondController.numberPattern.test("100aa")).toBe(false);
-    });
-
-    it('should call save method on UserService on calling saveData', function(){
-      secondController.bookDetails ={
-        bookId: 1,
-        name: "Mastering Web application development using AngularJS",
-        author: "Peter and Pawel"
-      };
-      secondController.bookForm ={
-        $setPristine: jasmine.createSpy('$setPristine')
-      };
-      passPromise = true;
-      secondController.saveData();
-      rootScope.$digest();
-
-      expect(secondController.bookDetails).toEqual({});
-      expect(secondController.bookForm.$setPristine).toHaveBeenCalled();
-    });
-
     it('should get recommended movies', function(){
-      secondController.getPopularMovies();
+      secondController.$onInit();
       console.log(secondController.popularMovies);
     });
   });

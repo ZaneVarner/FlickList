@@ -1,20 +1,16 @@
 angular.module('FlickList', [])
   .controller('HomeController', function(UserService, RecommendationService){
-    var homeCtrl=this;
+    var homeCtrl = this;
 
-    homeCtrl.saveData = function(){
-        UserService.getUser().then(function(result){
-        homeCtrl.bookDetails = {};
-        homeCtrl.bookForm.$setPristine();
-      });
+    homeCtrl.$onInit = function () {
+      homeCtrl.username = UserService.getUser();
+      homeCtrl.popularMovies = homeCtrl.getPopularMovies();
     };
-
-    homeCtrl.numberPattern = /^\d*$/;
-
+  
     homeCtrl.getPopularMovies = function () {
-        RecommendationService.getPopularMovies("2019").then(function (result) {
-          homeCtrl.popularMovies = result;
-          return result;
-        });
+      RecommendationService.getPopularMovies("2019").then(function (response) {
+        homeCtrl.popularMovies = response;
+        return response;
+      });
     };
   });
