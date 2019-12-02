@@ -4,27 +4,78 @@
 angular.module('FlickList')
 .controller('RecommendationController', RecommendationController);
 
-RecommendationController.$inject = ['UserService', 'RecommendationService', 'ListService'];
-function RecommendationController (UserService, RecommendationService, ListService) {
+RecommendationController.$inject = ['$scope', '$timeout', 'UserService', 'RecommendationService', 'ListService'];
+function RecommendationController ($scope, $timeout, UserService, RecommendationService, ListService) {
   var recommendCtrl = this;
 
-  // var sampleMovie = {
-  //   _id: 5da6788b99d3a4650bbfa935
-  //   Title: "Diary of a Wimpy Kid: The Long Haul"
-  //   Year: 2017
-  //   Poster: "https://m.media-amazon.com/images/M/MV5BYmMyZDRlNDktMDVmMS00Mjc2LThkNT..."
-  //   Plot: "A Heffley family road trip to attend Meemaw's 90th birthday party goes..."
-  //   Genre: ["Comedy", "Family"]
-  //   Cast: ["Marsai Martin", "Idara Victor", "Frances Fisher", "Frankie Faison"]
-  // }
-  //
-  //   recommendCtrl.getRecommendations = function () {
-  //     RecommendationService.getRecommendations(sampleMovie).then(function (response) {
-  //       recommendCtrl.getRecommendations = response;
-  //       console.log(response);
-  //       return response;
-  //     });
-  //   };
+  recommendCtrl.favoritesList = [];
+  recommendCtrl.recommendedList = [];
+  recommendCtrl.listStarts = [];
+
+  recommendCtrl.$onInit = async function () {
+    var favorites_response = await ListService.getListData(UserService.getUser(), "Favorites").then(function (response) {
+      recommendCtrl.favoritesList = response.list.slice(0, 3);
+      console.log(recommendCtrl.favoritesList);
+      return response;
+    });
+
+    for (var i = 0; i < recommendCtrl.favoritesList.length; i++) {
+      var searchString = recommendCtrl.buildSearchString(recommendCtrl.favoritesList[i]);
+      var recommended_response = await RecommendationService.getMoviesByKeyword(searchString).then(function (response) {
+        var filteredResponse = response.filter(function (element, index, array) {
+          return element.Title != recommendCtrl.favoritesList[i].Title;
+        });
+        recommendCtrl.recommendedList.push(filteredResponse);
+        recommendCtrl.listStarts.push(0);
+        return filteredResponse;
+      });
+    }
+
+    console.log(recommendCtrl.recommendedList);
+    console.log(recommendCtrl.listStarts);
+
+  };
+
+  recommendCtrl.buildSearchString = function (movie) {
+    var searchString = "";
+    searchString = searchString.concat(recommendCtrl.arrayToString(movie.Genre));
+    // searchString = searchString.concat(recommendCtrl.arrayToString(movie.Cast));
+    searchString = searchString.concat(recommendCtrl.arrayToString(movie.Cast.slice(0, 3)));
+    searchString = searchString.concat(recommendCtrl.arrayToString(movie.Directors));
+    return searchString;
+  };
+
+  recommendCtrl.arrayToString = function (array) {
+    var string = "";
+    for (var element of array) {
+      string = string.concat(element, " ");
+    }
+    return string;
+  };
+
+  recommendCtrl.plotSubstring = function (plotString) {
+    if (plotString.length > 100) {
+      return plotString.substring(0, 100).concat('...');
+    } else {
+      return plotString;
+    }
+  };
+
+  recommendCtrl.incrementListStart = function (listIndex) {
+    if (recommendCtrl.listStarts[listIndex] + 3 < recommendCtrl.recommendedList[listIndex].length) {
+      $timeout(function () {
+        recommendCtrl.listStarts[listIndex]++;
+      });
+    }
+  };
+
+  recommendCtrl.decrementListStart = function (listIndex) {
+    if (recommendCtrl.listStarts[listIndex] > 0) {
+      $timeout(function () {
+        recommendCtrl.listStarts[listIndex]--;
+      });
+    }
+  };
 
 }
 

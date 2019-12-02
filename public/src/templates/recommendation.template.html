@@ -1,21 +1,64 @@
 <h1>Recommendations</h1>
 
-<br><br><br>
-
-<div style="margin-left: 20px"
-  ng-if="MyListsController.watchList.list.length > 0">
-  <h5>
-    <h5> woof woof </h5>
-    <a ui-sref="root.list({listName: 'Watch List'})">
-      <strong>Go to Watch List >>></strong>
-    </a>
-  </h5>
-</div>
+<br>
 
 <div class="alert alert-primary"
-  ng-if="MyListsController.watchList.list.length == 0"
+  ng-if="recommendCtrl.favoritesList.length == 0"
   style="margin: 15px; display: inline-block;">
-  <strong>Oh snap! This list is empty.</strong>
+  <strong>Oh snap! We look for recommendations based on your Favorites list,
+  but it looks like yours is empty.</strong>
   <br>
-  <a class="alert-link" ui-sref="root.movie-search">Try adding some movies to your watchList</a> and then come back again.
+  <a class="alert-link" ui-sref="root.movie-search">Try adding some movies</a> and then come back again.
+</div>
+
+<div ng-repeat="favorite in recommendCtrl.favoritesList">
+  <div style="margin: 15px">
+    <h3>Because You Loved "{{ favorite.Title }}":</h3>
+  </div>
+
+  <span style="display: inline-block; vertical-align: text-top;">
+    <img ng-src="images/Left1Blue.png"
+      ng-click="recommendCtrl.decrementListStart(recommendCtrl.favoritesList.indexOf(favorite))"
+      width="80px" style="margin: 15px; margin-top: 100px; cursor: pointer" alt="Blue Left Arrow">
+  </span>
+  <div class="container col-3"
+      style="display:inline-block;"
+      height="1000px"
+      ng-repeat="movie in recommendCtrl.recommendedList[recommendCtrl.favoritesList.indexOf(favorite)]
+        .slice(recommendCtrl.listStarts[recommendCtrl.favoritesList.indexOf(favorite)],
+        recommendCtrl.listStarts[recommendCtrl.favoritesList.indexOf(favorite)] + 3)">
+    <div class="card border-primary mb-3" style="">
+      <div class="card-header" style="vertical-align: middle;">
+        <h4><a ui-sref="root.movie-detail({movieID: movie.imdbID})">
+          {{ movie.Title }} ({{ movie.Year }})
+        </a></h4>
+      </div>
+      <div class="card-body">
+        <span style="width: 40%; float: left;">
+          <img ng-src="{{ movie.Poster }}" alt="Poster Not Available" width="90%">
+        </span>
+        <span class="card-text" style="width: 60%; float: left;">
+          <p class="card-text">{{ recommendCtrl.plotSubstring(movie.Plot) }}</p>
+          <div>
+            <img ng-src="images/imdb_logo.png" width="30px" style="margin: 5px" alt="IMDb Logo">
+             {{ movie.imdbRating }} / 10
+          </div>
+          <div ng-if="movie.rottenTomatoesRating">
+            <img ng-src="images/rt_logo.png" width="37px" style="margin: 5px" alt="Rotten Tomatoes Logo">
+             {{ movie.rottenTomatoesRating }}%
+          </div>
+          <div ng-if="movie.metacriticRating">
+            <img ng-src="images/metacritic_logo.png" width="30px" style="margin: 5px" alt="Metacritic Logo">
+             {{ movie.metacriticRating }} / 100
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+  <span style="display: inline-block; vertical-align: text-top;">
+    <img ng-src="images/Right1Blue.png"
+      ng-click="recommendCtrl.incrementListStart(recommendCtrl.favoritesList.indexOf(favorite))"
+      width="80px" style="margin: 15px; margin-top: 100px; cursor: pointer" alt="Blue Right Arrow">
+  </span>
+  <br><br>
 </div>

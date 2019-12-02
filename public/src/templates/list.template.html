@@ -29,12 +29,12 @@
         ng-repeat="movie in listCtrl.listDetail.list">
         <th scope="row" style="vertical-align: middle;">
           <div>
-            <img src="images/Up1Blue.png"
+            <img ng-src="images/Up1Blue.png"
               ng-click="listCtrl.shiftPosition(listCtrl.listDetail.list.indexOf(movie), listCtrl.listDetail.list.indexOf(movie) - 1)"
               width="40px" style="margin: 15px; cursor: pointer" alt="Blue Up Arrow">
           </div>
           <div>
-            <img src="images/Down1Blue.png"
+            <img ng-src="images/Down1Blue.png"
               ng-click="listCtrl.shiftPosition(listCtrl.listDetail.list.indexOf(movie), listCtrl.listDetail.list.indexOf(movie) + 1)"
               width="40px" style="margin: 15px; cursor: pointer" alt="Blue Down Arrow">
           </div>
@@ -45,7 +45,7 @@
           </h2>
         </td>
         <td>
-          <img src="{{ movie.Poster }}" ui-sref="root.movie-detail({movieID: movie.imdbID})"
+          <img ng-src="{{ movie.Poster }}" ui-sref="root.movie-detail({movieID: movie.imdbID})"
             style="cursor: pointer;" width="100px" alt="Poster Not Available">
         </td>
         <td>
@@ -60,18 +60,18 @@
         </td>
         <td>
           <div ng-if="movie.imdbRating" style="margin-bottom: 10px; white-space: nowrap;">
-            <img src="images/imdb_logo.png"
+            <img ng-src="images/imdb_logo.png"
               width="30px" style="margin: 10px; margin-left: 25px;" alt="IMDb Logo">
               {{ movie.imdbRating }} / 10
           </div>
           <div ng-if="movie.rottenTomatoesRating"
             style="margin-bottom: 10px; white-space: nowrap;">
-            <img src="images/rt_logo.png" width="45px" style="margin: 5px; margin-left: 20px;" alt="Rotten Tomatoes Logo">
+            <img ng-src="images/rt_logo.png" width="45px" style="margin: 5px; margin-left: 20px;" alt="Rotten Tomatoes Logo">
               {{ movie.rottenTomatoesRating }}%
           </div>
           <div ng-if="movie.metacriticRating"
             style="margin-bottom: 10px; white-space: nowrap;">
-            <img src="images/metacritic_logo.png" width="30px" style="margin: 5px; margin-left: 25px;" alt="Metacritic Logo">
+            <img ng-src="images/metacritic_logo.png" width="30px" style="margin: 5px; margin-left: 25px;" alt="Metacritic Logo">
               {{ movie.metacriticRating }} / 100
           </div>
         </td>
