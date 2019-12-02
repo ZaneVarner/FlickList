@@ -7,34 +7,50 @@ angular.module('FlickList')
 RecommendationService.$inject = ['$http', 'API_PATH'];
 function RecommendationService ($http, API_PATH) {
   var service = this;
-  // Heap thisHeap = new Heap(5);
-  //
-  // service.getRecommendations = function (userMovie) {
-  //   var sameGenreMovies = $http.get(API_PATH + '/movies/genre/' + userMovie['Genre'][0]).then(function (response) {
-  //     return response.data;
-  //   });
-  //   var movieList = sameGenreMovies.toArray();
-  //   for(var movie : movieList) {
-  //     var movieScore = 0;
-  //
-  //     for(var inputCastMember : movie['Cast']) {
-  //       for(var originalCastMember : userMovie['Cast']) {
-  //         if(inputCastMember.equals(originalCastMember)) {
-  //           movieScore++;
-  //         }
-  //       }
-  //     }
-  //     movieScore += 1 / Math.abs(userMovie['year'] - movie['year']);
-  //     thisHeap.insertCheck(varMovieScore, movie);
-  //   }
-  //
-  //   var moviesInHeap = [];
-  //   for(var pairing : thisHeap.getHeap()) {
-  //     moviesInHeap.push(pairing[1]);
-  //   }
-  //   console.log(sameGenreMovies);
-  //   return moviesInHeap;
-  // };
+//   Heap thisHeap = new Heap(5);
+
+//   service.getRecommendations = function (userMovie) {
+//     var sameGenreMovies = $http.get(API_PATH + '/movies/genre/' + userMovie['Genre'][0]).then(function (response) {
+//       return response.data;
+//     });
+//     var movieList = sameGenreMovies.toArray();
+//     for(var movie : movieList) {
+//       var movieScore = 0;
+//
+//       for(var inputCastMember : movie['Cast']) {
+//         for(var originalCastMember : userMovie['Cast']) {
+//           if(inputCastMember.equals(originalCastMember)) {
+//             movieScore++;
+//           }
+//         }
+//       }
+//
+//       if(movie['Directors'][0].equals(userMovie['Directors'][0])) {
+//         movieScore++;
+//       }
+//
+//       for(var writer : movie['Writers']) {
+//         for(var originalWriter : userMovie['Writers']) {
+//           writer = writer.split(" (")[0];
+//           originalWriter = originalWriter.split(" (")[0];
+//           if(writer.equals(originalWriter)) {
+//             movieScore++;
+//           }
+//         }
+//       }
+//
+//       movieScore += 1 / Math.abs(userMovie['year'] - movie['year']);
+//
+//       thisHeap.insertCheck(varMovieScore, movie);
+//     }
+//
+//     var moviesInHeap = [];
+//     for(var pairing : thisHeap.getHeap()) {
+//       moviesInHeap.push(pairing[1]);
+//     }
+//     console.log(sameGenreMovies);
+//     return moviesInHeap;
+//   };
 
   service.getPopularMovies = function (year) {
     return $http.get(API_PATH + '/movies/popular/' + year).then(function (response) {

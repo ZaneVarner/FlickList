@@ -1,5 +1,21 @@
-<h1>Recommendations (Beta)</h1>
+<h1>Recommendations</h1>
 
 <br><br><br>
 
-<h4>This feature is coming soon.</h4>
+<div style="margin-left: 20px"
+  ng-if="MyListsController.watchList.list.length > 0">
+  <h5>
+    <h5> woof woof </h5>
+    <a ui-sref="root.list({listName: 'Watch List'})">
+      <strong>Go to Watch List >>></strong>
+    </a>
+  </h5>
+</div>
+
+<div class="alert alert-primary"
+  ng-if="MyListsController.watchList.list.length == 0"
+  style="margin: 15px; display: inline-block;">
+  <strong>Oh snap! This list is empty.</strong>
+  <br>
+  <a class="alert-link" ui-sref="root.movie-search">Try adding some movies to your watchList</a> and then come back again.
+</div>

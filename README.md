@@ -15,4 +15,6 @@ top level directory (same level as README.md)
 
 # To run unit tests
 1. Make sure all dependencies are installed (see step 2 in "To run")
-2. More instructions to come (currently in development)
+2. Run ```npm run test``` in the top level directory
+    - This will run all unit tests
+    - It will also automatically generate a code coverage report in the ```coverage/``` directory
