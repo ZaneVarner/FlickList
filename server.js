@@ -1,6 +1,6 @@
 const Express = require("express");
-// const fs = require("fs");
-// const https = require("https");
+const fs = require("fs");
+const https = require("https");
 const BodyParser = require("body-parser");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectID;
@@ -23,17 +23,17 @@ app.use(function(req, res, next) {
 
 var database, movie_collection, review_collection;
 
-// https.createServer({
-//   key: fs.readFileSync('server.key'),
-//   cert: fs.readFileSync('server.cert')
-// }, app).listen(PORT, function () {
-app.listen(PORT, function () {
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app).listen(PORT, function () {
+// app.listen(PORT, function () {
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, function (error, client) {
         if(error) {
             throw error;
         }
         database = client.db(DATABASE_NAME);
-        movie_collection = database.collection("movies");
+        movie_collection = database.collection("movies2");
         review_collection = database.collection("reviews");
         rating_collection = database.collection("ratings");
         list_collection = database.collection("lists");
@@ -47,7 +47,7 @@ MOVIE SEARCHING METHODS
 */
 
 // Get a movie by IMDb ID
-app.get("/movies/:imdbID", function (request, response) {
+app.get("/movies/imdbID/:imdbID", function (request, response) {
   var query = { 'imdbID': request.params.imdbID };
   movie_collection.findOne(query, function (error, result) {
     if (error) {
