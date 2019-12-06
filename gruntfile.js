@@ -22,6 +22,12 @@ module.exports = function(grunt) {
             // },
             // movieSearchService: {
             //     src: ["public/src/movie-search.module.js", "public/src/movie-search.service.js", "spec/movie-search.service.spec.js"]
+            // },
+            // movieDetailController: {
+            //     src: ["public/src/movie-search.module.js", "public/src/movie-detail.controller.js", "spec/movie-detail.controller.spec.js"]
+            // },
+            // ratingReviewService: {
+            //     src: ["public/src/flicklist.module.js", "public/src/rating-review.service.js", "spec/rating-review.service.spec.js"]
             // }
         }
     });
