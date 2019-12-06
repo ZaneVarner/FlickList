@@ -4,8 +4,8 @@
   "description": "This repository contains all source code for the FlickList application. Source code contributed by Colby Saxton, John Shi, Zane Varner, George Vo.",
   "main": "server.js",
   "scripts": {
-    "test": "karma start karma.conf.js",
-    "grunt": "grunt karma",
+    "karma": "karma start karma.conf.js",
+    "test": "grunt karma",
     "start": "node server.js"
   },
   "repository": {
