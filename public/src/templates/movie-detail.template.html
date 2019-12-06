@@ -1,13 +1,5 @@
 <h2>{{ movieDetailCtrl.movieDetail.Title }} ({{ movieDetailCtrl.movieDetail.Year }})</h2>
 
-<div class="row col-md-4 well well-md" style="margin: 15px;">
-  <button type="submit" class="btn btn-sm btn-secondary" data-target="#listModal" data-toggle="modal">
-    <div style="text-align: center; vertical-align: middle; margin: 15px">
-      <h5>Add to List</h5>
-    </div>
-  </button>
-</div>
-
 <div class="container">
   <div id="listModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -69,67 +61,148 @@
   </div>
 </div>
 
+<br>
 
 <div>
-  <img src="{{ movieDetailCtrl.movieDetail.Poster }}"
-    alt="Poster Not Available">
+  <div style="display: inline-block; vertical-align: text-top; margin: 10px;">
+    <img ng-src="{{ movieDetailCtrl.movieDetail.Poster }}"
+      alt="Poster Not Available">
+  </div>
+
+  <div style="display: inline-block; vertical-align: text-top; margin: 10px;">
+    <!-- <iframe width="560" height="315" -->
+    <iframe width="623" height="350"
+      ng-if="movieDetailCtrl.trailerAvailable"
+      ng-src="{{ movieDetailCtrl.trailerSource }}"
+      frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+    <div style="margin: 15px; text-align: center; font-size: 20px;">
+      <span style="margin-left: 15px; margin-right: 15px;">
+        <img ng-src="images/imdb_logo.png" width="40px" style="margin: 5px" alt="IMDb Logo">
+         {{ movieDetailCtrl.movieDetail.imdbRating }} / 10
+      </span>
+      <span ng-if="movieDetailCtrl.movieDetail.rottenTomatoesRating" style="margin-left: 15px; margin-right: 15px;">
+        <img ng-src="images/rt_logo.png" width="50px" style="margin: 5px" alt="Rotten Tomatoes Logo">
+         {{ movieDetailCtrl.movieDetail.rottenTomatoesRating }}%
+      </span>
+      <span ng-if="movieDetailCtrl.movieDetail.metacriticRating" style="margin-left: 15px; margin-right: 15px;">
+        <img ng-src="images/metacritic_logo.png" width="40px" style="margin: 5px" alt="Metacritic Logo">
+         {{ movieDetailCtrl.movieDetail.metacriticRating }} / 100
+      </span>
+    </div>
+  </div>
+
+  <div style="display: inline-block; vertical-align: text-top; margin: 10px;">
+    <div style="margin-top: 50px;">
+      <h4>Watch On:</h4>
+    </div>
+    <div>
+      <h4><a href="{{ movieDetailCtrl.netflixURL }}" target="_blank">
+        Netflix
+      </a></h4>
+    </div>
+    <div>
+      <h4><a href="{{ movieDetailCtrl.primeVideoURL }}" target="_blank">
+        Amazon Prime Video
+      </a></h4>
+    </div>
+    <div>
+      <h4><a href="{{ movieDetailCtrl.youtubeURL }}" target="_blank">
+        YouTube
+      </a></h4>
+    </div>
+
+    <div style="margin-top: 60px; margin-left: 15px; vertical-align: middle;">
+      <button type="submit" class="btn btn-sm btn-secondary btn-outline-primary" data-target="#listModal" data-toggle="modal">
+        <div style="min-width: 10rem; text-align: center; margin: 15px;">
+          <h4>Add to List</h4>
+        </div>
+      </button>
+    </div>
+  </div>
+
 </div>
 
-<div>
-  <h3>Director:</h3>
-  {{ movieDetailCtrl.movieDetail.Director }}
-</div>
 
-<div>
-  <h3>Starring:</h3>
-  {{ movieDetailCtrl.movieDetail.Actors }}
-</div>
-
-<div>
-  <h3>Awards:</h3>
+<div style="margin: 40px; color: white; font-size: 25px; font-style: italic;"
+  ng-if="movieDetailCtrl.movieDetail.Awards">
   {{ movieDetailCtrl.movieDetail.Awards  }}
 </div>
 
-<div>
-  <h3>Plot:</h3>
-  {{ movieDetailCtrl.movieDetail.Plot }}
+<div style="margin: 40px; font-size: 20px;">
+  {{ movieDetailCtrl.movieDetail.Plot_Full }}
+  <br>
+  <div style="color: white;"
+    ng-if="movieDetailCtrl.movieDetail.Rated">
+    Rated: {{ movieDetailCtrl.movieDetail.Rated  }}
+  </div>
 </div>
 
 <br>
-<br>
 
-<div>
-  <h4><a href="{{ movieDetailCtrl.netflixURL }}" target="_blank">
-    Watch on Netflix
-  </a></h4>
+<div style="margin-left: 25px;" ng-if="movieDetailCtrl.movieDetail.Directors">
+  <h3>Directors:</h3>
+  <div class="card border-primary mb-3" style="max-width: 20rem; min-width: 20rem; display: inline-block; margin: 5px"
+      ng-repeat="director in movieDetailCtrl.movieDetail.Directors">
+    <div class="card-body">
+      <h4 class="card-title">{{ director }}</h4>
+    </div>
+  </div>
 </div>
 
-<div>
-  <h4><a href="{{ movieDetailCtrl.primeVideoURL }}" target="_blank">
-    Watch on Amazon Prime Video
-  </a></h4>
+<div style="margin-left: 25px;" ng-if="movieDetailCtrl.movieDetail.Cast">
+  <h3>Top-Billed Cast:</h3><br>
+  <span style="display: inline-block; vertical-align: text-bottom;">
+    <img ng-src="images/Left1Blue.png"
+      ng-click="movieDetailCtrl.decrementCastStart()"
+      width="40px" style="margin: 15px; cursor: pointer" alt="Blue Left Arrow">
+  </span>
+  <div class="card border-primary mb-3" style="max-width: 20rem; min-width: 20rem; display: inline-block; margin: 5px"
+      ng-repeat="actor in movieDetailCtrl.movieDetail.Cast.slice(movieDetailCtrl.castStart, movieDetailCtrl.castStart + 3)">
+    <div class="card-body">
+      <h4 class="card-title">{{ actor }}</h4>
+      <p class="card-text" ng-if="movieDetailCtrl.movieDetail.Characters[actor.replace('.', '%')]">
+        {{ movieDetailCtrl.movieDetail.Characters[actor.replace('.', '%')] }}
+      </p>
+      <p style="margin: -0.01rem;"
+        ng-if="!movieDetailCtrl.movieDetail.Characters[actor.replace('.', '%')]">
+        <br>
+      </p>
+    </div>
+  </div>
+  <span style="display: inline-block; vertical-align: text-bottom;">
+    <img ng-src="images/Right1Blue.png"
+      ng-click="movieDetailCtrl.incrementCastStart()"
+      width="40px" style="margin: 15px; cursor: pointer" alt="Blue Right Arrow">
+  </span>
 </div>
 
-<div>
-  <h4><a href="{{ movieDetailCtrl.youtubeURL }}" target="_blank">
-    Watch on YouTube
-  </a></h4>
-</div>
-
-<br>
-<br>
-
-<div ng-if="movieDetailCtrl.trailerAvailable">
-  <h3>Trailer:</h3>
-  <iframe width="560" height="315"
-    src="{{ movieDetailCtrl.trailerSource }}"
-    frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-<div ng-if="!movieDetailCtrl.trailerAvailable">
-  <h2>Trailer unavailable.</h2>
+<div style="margin-left: 25px;" ng-if="movieDetailCtrl.movieDetail.Writers">
+  <h3>Featured Crew:</h3><br>
+  <span style="display: inline-block; vertical-align: text-bottom;">
+    <img ng-src="images/Left1Blue.png"
+      ng-click="movieDetailCtrl.decrementWriterStart()"
+      width="40px" style="margin: 15px; cursor: pointer" alt="Blue Left Arrow">
+  </span>
+  <div class="card border-primary mb-3" style="max-width: 20rem; min-width: 20rem; display: inline-block; margin: 5px"
+      ng-repeat="writer in movieDetailCtrl.movieDetail.Writers.slice(movieDetailCtrl.writerStart, movieDetailCtrl.writerStart + 3)">
+    <div class="card-body">
+      <h4 class="card-title">{{ writer.split(' (')[0] }}</h4>
+      <p class="card-text" ng-if="writer.split(' (')[1]">
+        ({{ writer.split(' (')[1] }}
+      </p>
+      <p class="card-text" ng-if="!writer.split(' (')[1]">
+        (written by)
+      </p>
+    </div>
+  </div>
+  <span style="display: inline-block; vertical-align: text-bottom;">
+    <img ng-src="images/Right1Blue.png"
+      ng-click="movieDetailCtrl.incrementWriterStart()"
+      width="40px" style="margin: 15px; cursor: pointer" alt="Blue Right Arrow">
+  </span>
 </div>
 
 <br>
@@ -227,5 +300,3 @@
 <br>
 <br>
 <br>
-
-<a ui-sref="root.movie-search">Start New Search</a>

@@ -22,7 +22,7 @@ function ListService ($http, API_PATH) {
   };
 
   service.getMovieByID = function (imdbID) {
-    return $http.get(API_PATH + '/movies/imdbID/' + imdbID).then(function (response) {
+    return $http.get(API_PATH + '/movies/' + imdbID).then(function (response) {
       return response.data;
     });
   };

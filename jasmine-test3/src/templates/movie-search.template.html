@@ -10,11 +10,10 @@
 <input type="text" ng-model="movieSearchCtrl.inputSearchTerm"
   ng-if="movieSearchCtrl.searchType != 'Genre'">
 
-<div class="form-group" style="width: 20rem"
-  ng-if="movieSearchCtrl.searchType == 'Genre'">
+<div class="form-group" ng-if="movieSearchCtrl.searchType == 'Genre'">
   <label for="genreSelect">Select Genre</label>
-  <select class="form-control" id="genreSelect"
-    ng-model="movieSearchCtrl.searchGenre">
+  <select class="form-control" id="genreSelect" width="50%"
+      ng-model="movieSearchCtrl.searchGenre">
     <option>Action</option>
     <option>Adventure</option>
     <option>Animation</option>
@@ -45,18 +44,15 @@
 </div>
 
 <br>
+<!-- Must find solution to make input search term the genre when applicable -->
+<button
+  ng-click="movieSearchCtrl.searchMovies()">
+  Search for Movies
+</button>
 
-<div style="margin: 15px;">
-  <button type="button" class="btn btn-primary"
-    ng-click="movieSearchCtrl.searchMovies()">
-    Search for Movies
-  </button>
-</div>
-
-
-<div class="form-group" style="width: 20rem">
+<div class="form-group">
   <label for="searchTypeSelect">Select Search Type</label>
-  <select class="form-control" id="searchTypeSelect"
+  <select class="form-control" id="searchTypeSelect" width="50%"
       ng-model="movieSearchCtrl.searchType"
       ng-change="movieSearchCtrl.resetResults()">
     <option>Title</option>
@@ -116,37 +112,79 @@
   No results found for '{{ movieSearchCtrl.inputSearchTerm }}'.
 </div>
 
+<!-- <div ng-if="movieSearchCtrl.showMovies">
+  Displaying titles
+  {{ movieSearchCtrl.firstTitleOnPage }}-{{ movieSearchCtrl.lastTitleOnPage }}
+  of {{ movieSearchCtrl.totalResults }}.
+</div>
+
+<br>
+
+<button
+  ng-if="movieSearchCtrl.showMovies && movieSearchCtrl.thisPage > 1"
+  ng-click="movieSearchCtrl.searchMovies(movieSearchCtrl.searchTerm,
+            movieSearchCtrl.previousPage)">
+  Previous Page
+</button>
+<button
+  ng-if="!movieSearchCtrl.isLastPage && movieSearchCtrl.showMovies"
+  ng-click="movieSearchCtrl.searchMovies(movieSearchCtrl.searchTerm,
+            movieSearchCtrl.nextPage)">
+  Next Page
+</button> -->
+
+<!-- <br>
+
+<div>Previous Page: {{ movieSearchCtrl.previousPage }}</div>
+<div>This Page: {{ movieSearchCtrl.thisPage }}</div>
+<div>Next Page: {{ movieSearchCtrl.nextPage }}</div>
+<div>Total Pages: {{ movieSearchCtrl.totalPages }}</div>
+<div>Last Page: {{ movieSearchCtrl.isLastPage }}</div> -->
+
 <br>
 <br>
+
+<!-- <ul ng-if="movieSearchCtrl.showMovies">
+  <li ng-repeat="movie in movieSearchCtrl.movies"
+      ui-sref="root.movie-detail({movieTitle: movie.Title})">
+    <div>{{ movie.Title }} ({{ movie.Year }})</div>
+    <img src="{{ movie.Poster }}" alt="Poster Not Available"
+      height="100px">
+  </li>
+</ul> -->
 
 <div class="container col-lg-3 col-md-4 col-sm-6"
     style="display:inline-block;"
     height="1000px"
     ng-repeat="movie in movieSearchCtrl.movies"
-    ng-if="movieSearchCtrl.showMovies">
-  <div class="card border-primary mb-3" style="">
+    ng-if="movieSearchCtrl.showMovies"
+    ui-sref="root.movie-detail({movieID: movie.imdbID})">
+  <div class="card border-primary mb-3" style="max-width: 20rem;">
     <div class="card-header">
-      <a ui-sref="root.movie-detail({movieID: movie.imdbID})">
-        <h4 class="card-title" width="100%">{{ movie.Title }} </h4>
-        <h5 class="card-title" width="50%">({{ movie.Year }})</h5>
-      </a>
+      <h4 class="card-title" width="100%">{{ movie.Title }} </h4>
+      <h5 class="card-title" width="50%">({{ movie.Year }})</h5>
     </div>
     <div class="card-body">
-      <img ng-src="{{ movie.Poster }}" alt="Poster Not Available"
+      <img src="{{ movie.Poster }}" alt="Poster Not Available"
         width="100%">
       <p class="card-text">{{ movie.Plot }}</p>
-      <div>
-        <img ng-src="images/imdb_logo.png" width="30px" style="margin: 5px" alt="IMDb Logo">
-         {{ movie.imdbRating }} / 10
-      </div>
-      <div ng-if="movie.rottenTomatoesRating">
-        <img ng-src="images/rt_logo.png" width="37px" style="margin: 5px" alt="Rotten Tomatoes Logo">
-         {{ movie.rottenTomatoesRating }}%
-      </div>
-      <div ng-if="movie.metacriticRating">
-        <img ng-src="images/metacritic_logo.png" width="30px" style="margin: 5px" alt="Metacritic Logo">
-         {{ movie.metacriticRating }} / 100
-      </div>
+      <div>IMDb: {{ movie.imdbRating }}/10</div>
+      <div ng-if="movie.rottenTomatoesRating">Rotten Tomatoes: {{ movie.rottenTomatoesRating }}%</div>
+      <div ng-if="movie.metacriticRating">Metacritic: {{ movie.metacriticRating }}/100</div>
     </div>
   </div>
 </div>
+
+
+<!-- <div class="card border-primary mb-3" style="max-width: 20rem;"
+    ng-repeat="movie in movieSearchCtrl.movies"
+    ui-sref="root.movie-detail({movieTitle: movie.Title})">
+  <div class="card-header">
+    <h4 class="card-title">{{ movie.Title }} ({{ movie.Year }})</h4>
+  </div>
+  <div class="card-body">
+    <img src="{{ movie.Poster }}" alt="Poster Not Available"
+      height="100px">
+    <p class="card-text">{{ movie.Plot }}</p>
+  </div>
+</div> -->

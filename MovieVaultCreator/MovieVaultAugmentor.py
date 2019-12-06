@@ -67,7 +67,7 @@ myclient = pymongo.MongoClient("mongodb+srv://zanevarner:test1234@cluster0-xblnp
 # Create Database and Collection
 mydb = myclient["movies1"]
 mycol = mydb["movies"]
-newcol = mydb["movies2"]
+newcol = mydb["movies3"]
 
 
 # CREATE A FUNCTION TO AUGMENT DOCUMENT AND ADD TO NEW COLLECTION

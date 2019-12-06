@@ -32,6 +32,33 @@ function MovieDetailController (movieDetail, $scope, $timeout, $sce, ListService
     .concat(movieDetailCtrl.movieDetail.Year)
     .concat("+trailer"));
 
+  movieDetailCtrl.castStart = 0;
+  movieDetailCtrl.writerStart = 0;
+
+  movieDetailCtrl.incrementCastStart = function () {
+    if (movieDetailCtrl.castStart + 3 < movieDetailCtrl.movieDetail.Cast.length) {
+      movieDetailCtrl.castStart++;
+    }
+  };
+
+  movieDetailCtrl.decrementCastStart = function () {
+    if (movieDetailCtrl.castStart > 0) {
+      movieDetailCtrl.castStart--;
+    }
+  };
+
+  movieDetailCtrl.incrementWriterStart = function () {
+    if (movieDetailCtrl.writerStart + 3 < movieDetailCtrl.movieDetail.Writers.length) {
+      movieDetailCtrl.writerStart++;
+    }
+  };
+
+  movieDetailCtrl.decrementWriterStart = function () {
+    if (movieDetailCtrl.writerStart > 0) {
+      movieDetailCtrl.writerStart--;
+    }
+  };
+
   movieDetailCtrl.userLists = [];
   movieDetailCtrl.customLists = [];
 

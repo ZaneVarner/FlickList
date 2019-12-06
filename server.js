@@ -25,7 +25,9 @@ var database, movie_collection, review_collection;
 
 // https.createServer({
 //   key: fs.readFileSync('server.key'),
-//   cert: fs.readFileSync('server.cert')
+//   cert: fs.readFileSync('server.cert'),
+//   requestCert: false,
+//   rejectUnauthorized: false
 // }, app).listen(PORT, function () {
 app.listen(PORT, function () {
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, function (error, client) {
@@ -33,7 +35,7 @@ app.listen(PORT, function () {
             throw error;
         }
         database = client.db(DATABASE_NAME);
-        movie_collection = database.collection("movies2");
+        movie_collection = database.collection("movies3");
         review_collection = database.collection("reviews");
         rating_collection = database.collection("ratings");
         list_collection = database.collection("lists");
@@ -47,7 +49,7 @@ MOVIE SEARCHING METHODS
 */
 
 // Get a movie by IMDb ID
-app.get("/movies/:imdbID", function (request, response) {
+app.get("/movies/imdbID/:imdbID", function (request, response) {
   var query = { 'imdbID': request.params.imdbID };
   movie_collection.findOne(query, function (error, result) {
     if (error) {
@@ -81,6 +83,25 @@ app.get("/movies/keyword/title/:keyword", function (request, response) {
       { $text: { $search: request.params.keyword } },
       { projection: { score: { $meta: 'textScore' } } })
     .sort( { score: { $meta: "textScore" } } ).limit(100)
+    .toArray(function (error, result) {
+        if(error) {
+            return response.status(500).send(error);
+        }
+        response.send(result);
+    });
+});
+
+// Get recommended movies that match a string of keywords
+app.get("/movies/keyword/string/:keyword", function (request, response) {
+    movie_collection.createIndex({
+      Genre: "text",
+      Cast: "text",
+      Directors: "text"
+    });
+    movie_collection.find(
+      { $text: { $search: request.params.keyword } },
+      { projection: { score: { $meta: 'textScore' } } })
+    .sort( { score: { $meta: "textScore" } } ).limit(16)
     .toArray(function (error, result) {
         if(error) {
             return response.status(500).send(error);

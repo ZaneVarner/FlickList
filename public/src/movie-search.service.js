@@ -55,17 +55,10 @@ function MovieSearchService ($http, API_PATH) {
     });
   };
 
-  service.getMovieDetail = function (movieTitle) {
-    return $http({
-      method: "GET",
-      url: "https://www.omdbapi.com/",
-      params: {
-        i: movieTitle,
-        plot: "full",
-        apikey: "44664e4"
-      }
-    }).then(function (result) {
-      return result.data;
+  service.getMovieDetail = function (imdbID) {
+    return $http.get(API_PATH + '/movies/imdbID/' + imdbID).then(function (response) {
+      console.log(response.data);
+      return response.data;
     });
   };
 

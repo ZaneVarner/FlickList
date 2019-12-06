@@ -36,7 +36,7 @@
 	  <div class="card border-primary mb-3" style="">
 	    <div class="card-header" style="vertical-align: middle;">
 	      <h3><a ui-sref="root.recommendation">
-	        Recommendations (Beta)
+	        Recommendations
 	      </a></h3>
 	    </div>
 	    <div class="card-body">
@@ -63,19 +63,18 @@
       </a>
     </div>
     <div class="card-body">
-      <img src="{{ movie.Poster }}" alt="Poster Not Available"
-        width="100%">
+      <img ng-src="{{ movie.Poster }}" alt="Poster Not Available" width="100%">
       <p class="card-text">{{ movie.Plot }}</p>
       <div>
-        <img src="images/imdb_logo.png" width="30px" style="margin: 5px" alt="IMDb Logo">
+        <img ng-src="images/imdb_logo.png" width="30px" style="margin: 5px" alt="IMDb Logo">
          {{ movie.imdbRating }} / 10
       </div>
       <div ng-if="movie.rottenTomatoesRating">
-        <img src="images/rt_logo.png" width="37px" style="margin: 5px" alt="Rotten Tomatoes Logo">
+        <img ng-src="images/rt_logo.png" width="37px" style="margin: 5px" alt="Rotten Tomatoes Logo">
          {{ movie.rottenTomatoesRating }}%
       </div>
       <div ng-if="movie.metacriticRating">
-        <img src="images/metacritic_logo.png" width="30px" style="margin: 5px" alt="Metacritic Logo">
+        <img ng-src="images/metacritic_logo.png" width="30px" style="margin: 5px" alt="Metacritic Logo">
          {{ movie.metacriticRating }} / 100
       </div>
     </div>
